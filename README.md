@@ -1,1 +1,1 @@
-# SKKU-Microsoft-SAY
+# MS-AI-SAY
