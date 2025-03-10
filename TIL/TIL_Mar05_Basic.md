@@ -21,3 +21,4 @@
 - alt + shift + 화살표위/아래 : 줄 복사
 - ctrl + shift + k : 줄 삭제
 - ctrl + spaceBar : 자동완성
+- ctrl + ` : editor terminal 간 커서 이동
