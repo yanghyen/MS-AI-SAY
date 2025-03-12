@@ -18,15 +18,38 @@
 ### set
 - 중복 제거 (뭔가 좀...)
 - 무작위 순서
+- list -> set -> list 중복 없애는 용으로 쓰이긴 함
+    ```py
+    a = [1, 2, 2, 1, 3]
+    a = list(set(a))
+    ```
 ### dict
 - key : value
 - 순서 개념X
 ```py
 student = {"반장":"나미", "부반장":"카피바라"}
 print(student["반장"])
+print(list(student.keys())) # 키만 추출해서 리스트
+print("김밍송" in student) # 학생 중에 김밍송이 있나
 >>>
 나미
 ```
+- 유용한 코드
+    - print(list(student.keys())) # 키만 추출해서 리스트
+    - print("김밍송" in student) # 학생 중에 김밍송이 있나
 ### JAVA vs Python
 - JAVA : 규칙의 언어
 - Python : 자유의 언어
+### range
+- 범위 표현, 규칙적인 list 생성
+```py
+a = range(1, 15, 2) # 1~15, 2칸씩
+b = list(range(1, 20))
+```
+### tuple
+- 특징은 list와 동일, 수정 불가
+- 데이터 저장용 X
+- 변수 여러개 한번에 값 넣을 때
+    - (q, w) = (w, q)
+- tuple의 소괄호는 생략 가능
+    - q, w = w, q
