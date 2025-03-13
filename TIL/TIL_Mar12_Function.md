@@ -16,12 +16,24 @@
     1. 정의 
     - 함수명 규칙 == 변수명 규칙 
     - parameter : 함수 수행시 필요한 재료
+    - return 값 : 값을 되돌려주고 함수 끝
+        - Python에서 여러 값 return되는 것처럼 보여도 tuple로 받아지는 거임
+        => collection으로 받자
+        - 안 받아도 되는 값은 변수명 ㄴㄴ => _로 받기
     2. 함수 호출
     ```py
     def test():
         pass    # 자리 채우기
     ```
     - overloading 불가
+    - lambda 함수 : 무명의 1회용 함수
+        ```py
+        (lambda x:print("양혜인" * x))(3)
+        ```
+        - 값 간단하게 구할 때
+        ```py
+        # a + b return하고 싶을 때
+        c = (lambda a, b:a+b)(1, 2)
 ### 참고
 - 작명 팁
     - 동사 앞으로 정렬 -> 기능별 정렬
