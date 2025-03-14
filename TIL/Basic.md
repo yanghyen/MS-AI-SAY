@@ -22,3 +22,4 @@
 - ctrl + shift + k : 줄 삭제
 - ctrl + spaceBar : 자동완성
 - ctrl + ` : editor terminal 간 커서 이동
+- ctrl + shift + l : 여러개의 같은 변수명 한번에 수정
