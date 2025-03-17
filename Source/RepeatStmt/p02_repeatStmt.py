@@ -16,8 +16,9 @@ if value >= (1 << 0):
 # -----------------------------------
 # shift & 반복문
 # value = int(input("값을 입력하세용 : "))
-value = 13
-for i in range(3, -1):
+
+data = ["와이파이", "주차장", "흡연실", "24시간"]
+for i in range(len(data) - 1, -1, -1):
     if value >= (1 << i):
-        print("24시간")
+        print(data[i]) 
         value -= (1 << i)
