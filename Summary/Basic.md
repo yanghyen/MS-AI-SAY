@@ -1,3 +1,6 @@
+# Part1 : Procedural Programming (절차지향프로그래밍)
+- 공식 명칭은 아님
+- 변수, 함수, 제어문, ...을 최적의 순서로 배치해서 프로그램 만들자
 # Python 이란?
 - **interpreter 방식** : 프로그램 소스 한 줄씩 기계어로 번역 후 실행
     - Python
