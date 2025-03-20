@@ -56,7 +56,13 @@ a = getSum(19)
         printSum VS sumPrint
 - overriding VS overloading
     - overriding : 부모 클래스의 메소드를 **자식 클래스**에서 재정의하는 것
-    - overloading : 
+    - overloading : 같은 이름의 메소드를 여러 개 정의하는 것.      
+        - JAVA
+            - 파라미터 다르면 함수명 같아도 됨 => 일부러 같게 
+            - 생성자 다양하게 만들어두고, 필요한 것들 갖다 씀
+        - Python
+            - 구조상 overloading 불가능 = 생성자 하나만 가능
+            - 생성자 여러개 만들어놓고 필요한 거 갖다쓰기 불가능
 - Call By Value, Call By Reference
     - Call By Value : 함수 호출 시 값 넣어서 호출
     - Call By Reference : 함수 호출 시 주소값 넣어서 호출 (Python)
