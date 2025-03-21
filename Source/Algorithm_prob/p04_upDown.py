@@ -1,6 +1,4 @@
-from getpass import getuser
 from random import randint
-from xml.dom import UserDataHandler
 # 컴이 1 ~ 10000 사이 랜덤한 숫자 하나 생각해놓고
 # 5912
 
