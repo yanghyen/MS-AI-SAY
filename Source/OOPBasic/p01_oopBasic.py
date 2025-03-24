@@ -7,9 +7,9 @@
 # class : 객체 찍는 도장/붕어빵 틀
 class Cat:
     # member
-    name = None
-    age = None
-
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
     # method
     def singGolgol(self):
         print("그르릉")
