@@ -62,3 +62,22 @@ finally:
     - Exception으로부터 상속받는 IndexError
 - 왜 굳이 finally 씀?
     - 문제가 있었든 없었든 무조건 실행 + **return보다 먼저 실행**
+- 예시
+    ```py
+    data = input().split(',')
+    print("---------------")
+
+    sum = 0
+    cnt = 0
+    for v in data:
+        try:
+            v = int(v)
+            sum += v
+            cnt += 1
+        except:
+            pass
+
+    print("합계 : %d" % sum)
+    print("평균 : %.1f" %(sum / cnt))
+    ```
+    - 인풋에 글자 포함돼있으면 무시하고 정수형 객체 생성하고 합계와 평균 구함
