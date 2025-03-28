@@ -2,11 +2,6 @@
 # 월 0000000
 # 화 0000000
 # 2015.01.01 목
-
-
-
-
-
 from datetime import datetime
 
 
