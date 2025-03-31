@@ -22,8 +22,8 @@ for yy in range(15, 25):
                         y = busDate[0:4]
                         m = busDate[4:6]
                         d = busDate[6:8]
-                        busNum = b["RTE_NM"]
-                        stationName = b["SBWY_STNS_NM"]
+                        busNum = b["RTE_NM"].replace(",",".")
+                        stationName = b["SBWY_STNS_NM"].replace(",",".")
                         getOn = b["GTON_TNOPE"]
                         getOff = b["GTOFF_TNOPE"]
                         totalData = "%s,%s,%s,%s,%s,%d,%d\n" %(y, m, d, busNum, stationName, getOn, getOff)
