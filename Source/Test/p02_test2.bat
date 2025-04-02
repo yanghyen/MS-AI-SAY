@@ -1,1 +1,0 @@
-python p02_test.py 
