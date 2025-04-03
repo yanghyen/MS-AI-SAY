@@ -8,7 +8,10 @@
     - record, data, row(행)
 
 ## CRUD
-### Create
+- 실행결과
+    - CUD : 데이터 몇개 영향 받았는지 결과가 뜸
+    - R : 데이터
+### Create : INSERT 
 - 필드명 규칙
     - 테이블명에서 따옴
     - snack 테이블 -> s_name, s_price
@@ -84,7 +87,7 @@ INSERT INTO apr01_snack(S_PRICE, S_NAME)
 VALUES (500, 'mychu');
 ```
 
-### Read
+### Read : SELECT 
 - 데이터 조회
     통계 함수 : max, min, sum, avg, count  
     select만 가능. where에선 불가능
@@ -174,3 +177,34 @@ WHERE r_no = m_r_no ;
     ```SELECT DISTINCT c_name``` 하면 됨
 ### ?
 - =과 in의 차이?  
+
+### Update : UPDATE
+```sql
+UPDATE 테이블명
+SET 필드명=값, 필드명=값, ...
+WHERE 조건식;
+
+-- 김씨 사장님네 메뉴 10% 인상
+UPDATE APR02_MENU 
+SET m_price = m_price * 1.1
+WHERE m_r_no in (
+	SELECT r_r_no 
+	FROM APR02_RUN
+	WHERE r_c_no in (
+		SELECT c_no
+		FROM APR02_CEO
+		WHERE c_name LIKE '김%'
+	)
+);
+```
+### Delete : DELETE
+```sql
+DELETE FROM 테이블명
+WHERE 조건식;
+
+-- 제일 비싼 메뉴 삭제
+DELETE FROM APR02_MENU
+WHERE m_price = (
+	SELECT max(m_price)
+	FROM APR02_MENU
+);
