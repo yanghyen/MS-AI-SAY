@@ -30,6 +30,6 @@ weatherData = loads(resBody)
 desc = weatherData["weather"][0]["description"]
 temp = weatherData["main"]["temp"]
 humi = weatherData["main"]["humidity"]
-print(desc)
-print(temp)
+print(desc, type(desc))
+print(temp, type(temp))
 print(humi)
