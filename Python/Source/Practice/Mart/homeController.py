@@ -23,26 +23,42 @@ from SnackDAO import SnackDAO
 from View import ConsoleScreen
 
 if __name__ == "__main__":
-    SnackDAO.getAllSnackCount()
+    sDAO = SnackDAO()
+    mDAO = ManufacturerDAO()
+
     while True:
         menu = ConsoleScreen.showMainMenu()
         if menu == "10":
             break
         elif menu == '1':
             m = ConsoleScreen.showRegManufacturerMenu()
-            result = ManufacturerDAO.reg(m)
+            result = mDAO.reg(m)
             ConsoleScreen.printResult(result)
         elif menu == '2':
             s = ConsoleScreen.showRegSnackMenu()
-            result = SnackDAO.reg(s)
+            result = sDAO.reg(s)
             result = ConsoleScreen.printResult(result)
         elif menu == '3':
-            manufacturers = ManufacturerDAO.getAll()
+            manufacturers = mDAO.getAll()
             ConsoleScreen.printManufacturers(manufacturers)
         elif menu == '4':
-            snacks = SnackDAO.getAll()
+            snacks = sDAO.getAll()
             ConsoleScreen.printSnacks(snacks)
+        elif menu == '5':
+            pageCount = mDAO.getAllPageCount()
+            pageNo = ConsoleScreen.showSelectPageMenu(pageCount)
+            manufacturers = mDAO.get(pageNo)
+            ConsoleScreen.printManufacturers(manufacturers)
         elif menu == '6':
-            pass
+            pageCount = sDAO.getPageCount("")
+            pageNo = ConsoleScreen.showSelectPageMenu(pageCount)
+            snacks = sDAO.get(pageNo, "")
+            ConsoleScreen.printSnacks(snacks)
+        elif menu == '8':
+            searchTxt = ConsoleScreen.searchMenu()
+            pageCount = sDAO.getSearchSnackCount(searchTxt)
+            pageNo = ConsoleScreen.showSelectPageMenu(pageCount)
+            snacks = sDAO.get(pageNo, searchTxt)
+            ConsoleScreen.printSnacks(snacks)
 
 
