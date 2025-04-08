@@ -30,15 +30,17 @@ class SnackDAO:
           
             sql = "SELECT * "
             sql += "FROM (SELECT rownum AS rn, s_no, s_name, s_exp, s_price, s_weight, s_c_name "
-            sql += "FROM (select * from apr07_snack" 
+            sql += "FROM (select * from apr07_snack " 
             sql += "WHERE s_name like '%s' order by s_name, s_price)) " %("%" + searchTxt + "%")
             sql += "WHERE rn >= %d AND rn <= %d" %(start, end)
 
             cur.execute(sql)
+            # 여기 수정하면 됨!!! snacks에 안 담기는 거
             snacks = []
             for _, no, name, exp, price, weight, manufacturerName in cur:
                 s = Snack(name, exp, price, weight, manufacturerName)
                 snacks.append(s)
+            print(snacks)
             return snacks
         except:
             print(sql)
