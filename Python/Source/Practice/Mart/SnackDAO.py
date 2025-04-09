@@ -35,10 +35,76 @@ class SnackDAO:
             sql += "WHERE rn >= %d AND rn <= %d" %(start, end)
 
             cur.execute(sql)
+            snacks = []
+            for _, no, name, exp, price, weight, c_name in cur:
+                s = Snack(no, name, exp, price, weight, c_name)
+                snacks.append(s)
+            return snacks
+        except:
+            print(sql)
+            return None
+        finally:
+            OracleDBManager.closeConCur(con, cur)
+
+    def get2(self, pageNo, searchTxt):
+        try:
+            con, cur = OracleDBManager.makeConCur("yanghyen/0317@195.168.9.126:1521/xe")
+          
+            pageNo = int(pageNo)
+            start = (pageNo - 1) * self.snackPerPage + 1
+            end = start * self.snackPerPage 
+
+            # join
+            # A : 100개
+            # B : 100개
+            # 1) A, B join하면 10000개로 데이터 폭증
+                # 과자만 가져오고, 회사는 Python으로 따로 가져와서
+                # 과자가 3개라 치면 
+                    # 조회 1    조회 3 -> 총 조회횟수 N+1번이 됨
+            # 2) 필요한 것만 가져와서 join
+
+            sql = '''
+                SELECT s_no, s_name, s_exp, s_price, s_weight, m_name, m_addr, m_ceo, m_employee_num
+                FROM (
+                    SELECT s_no, s_name, s_exp, s_price, s_weight, s_c_name
+                    FROM (
+                        SELECT rownum AS rn, s_no, s_name, s_exp, s_price, s_weight, s_c_name
+                        FROM ( '''
+            sql += '''
+                            SELECT *
+                            FROM apr07_snack
+                            WHERE s_name LIKE '%s'
+                            ORDER BY s_name, s_price
+                        )
+                    )
+                    WHERE rn >= %d AND rn <= %d
+                ), (''' % ("%" + searchTxt + "%", start, end)
+            sql += '''
+                    SELECT * 
+                    FROM apr07_manufacturer 
+                    WHERE m_name IN (
+                        SELECT s_c_name
+                        FROM (
+                            SELECT rownum AS rn, s_no, s_name, s_exp, s_price, s_weight, s_c_name
+                            FROM (
+                                SELECT *
+                                FROM apr07_snack
+                                WHERE s_name LIKE '%s'
+                                ORDER BY s_name, s_price
+                            )
+                        )
+                        WHERE rn >= %d AND rn <= %d
+                    )	
+                )
+                WHERE m_name = s_c_name
+                ORDER BY s_name, s_price
+                ''' % ("%" + searchTxt + "%", start, end)
+
+            cur.execute(sql)
             # 여기 수정하면 됨!!! snacks에 안 담기는 거
             snacks = []
-            for _, no, name, exp, price, weight, manufacturerName in cur:
-                s = Snack(name, exp, price, weight, manufacturerName)
+            for no, name, exp, price, weight, c_name in cur:
+                s = Snack(name, exp, price, weight, c_name)
                 snacks.append(s)
             print(snacks)
             return snacks
@@ -54,8 +120,8 @@ class SnackDAO:
             sql = "select * from apr07_snack order by s_name, s_price"
             cur.execute(sql)
             snacks = []
-            for no, name, exp, price, weight, manufacturerName in cur:
-                s = Snack(name, exp, price, weight, manufacturerName)
+            for no, name, exp, price, weight, c_name in cur:
+                s = Snack(name, exp, price, weight, c_name)
                 snacks.append(s)
             return snacks
         except:
@@ -89,7 +155,7 @@ class SnackDAO:
         try:
             con, cur = OracleDBManager.makeConCur("yanghyen/0317@195.168.9.126:1521/xe")
             sql = "insert into apr07_snack "
-            sql += "values(apr07_snack_seq.nextval, '%s', to_date('%s', 'YYYYMMDD'), %d, %d, '%s')" %(s.name, s.exp, s.price, s.weight, s.manufacturerName)
+            sql += "values(apr07_snack_seq.nextval, '%s', to_date('%s', 'YYYYMMDD'), %d, %d, '%s')" %(s.name, s.exp, s.price, s.weight, s.c_name)
             cur.execute(sql)
             if cur.rowcount == 1:
                 con.commit()

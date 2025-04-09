@@ -5,8 +5,8 @@ from lib.OracleDBManager import OracleDBManager
 
 class ManufacturerDAO:
     def __init__(self):
-        self.setAllManufacturerCount()
         self.manufacturerPerPage = 3
+        self.setAllManufacturerCount()
 
     def setAllManufacturerCount(self):
         try:
@@ -45,18 +45,46 @@ class ManufacturerDAO:
             OracleDBManager.closeConCur(con, cur)            
 
     def getAll(self):
-        con, cur = OracleDBManager.makeConCur("yanghyen/0317@195.168.9.126:1521/xe")
-        sql = "select * from apr07_manufacturer order by m_name, m_employee_num"
-        cur.execute(sql)
-        manufacturers = []
-        for name, addr, ceo, emp in cur:
-            m = Manufacturer(name, addr, ceo, emp)
-            manufacturers.append(m)
-        return manufacturers
+        try:
+            con, cur = OracleDBManager.makeConCur("yanghyen/0317@195.168.9.126:1521/xe")
+            sql = "select * from apr07_manufacturer order by m_name, m_employee_num"
+            cur.execute(sql)
+            manufacturers = []
+            for name, addr, ceo, emp in cur:
+                m = Manufacturer(name, addr, ceo, emp)
+                manufacturers.append(m)
+            return manufacturers
+        except Exception as e:
+            print(e)
+            return None
+        finally:
+            OracleDBManager.closeConCur(con, cur)
     
-    def getAllPageCount(self):
-        return ceil(self.allManufacturerCount / self.manufacturerPerPage)
+    def getAllPageCount(self, searchTxt):
+        if searchTxt == "":
+            manufacturerCount = self.allManufacturerCount
+        else:
+            manufacturerCount = self.getSearchManufacturerCount(searchTxt)
+        return ceil(manufacturerCount / self.manufacturerPerPage)
+    
+    def getSearchManufacturerCount(self,searchTxt):
+        try:
+            # DB접속 라이브러리에 있는 연결 함수 사용
+            con,cur =OracleDBManager.makeConCur("yanghyen/0317@195.168.9.126:1521/xe")
+            searchTxt="%"+searchTxt+"%"
+            sql="select count(*) from apr07_manufacturer where c_name like '%s'" % searchTxt
+            cur.execute(sql)
+            for v in cur:
+                # DB 결과가 튜플이라 튜플의 원소 하나만 불러와야 숫자만 제대로 불러와짐. 
+                return v[0]
+        except:
+            return -1
+        finally:
+            # DB접속 라이브러리에 있는 연결해제 함수 사용
+            OracleDBManager.closeConCur(con,cur)
 
+
+    
     def reg(self, c):
         try:
             con, cur = OracleDBManager.makeConCur("yanghyen/0317@195.168.9.126:1521/xe")

@@ -16,6 +16,7 @@ class ConsoleScreen:
         print('6) 과자조회')
         print('7) 회사검색')
         print('8) 과자검색')
+        print('9) ')
         print("10) 종료")
         print('-----------')
         return input("뭐 : ")
@@ -32,8 +33,8 @@ class ConsoleScreen:
         exp = input("유통기한(YYYYMMDD) : ")
         price = input("가격 : ")
         weight = input("중량 : ")
-        manufacturerName = input("제조사 : ")
-        return Snack(name, exp, price, weight, manufacturerName)
+        c_name = input("제조사 : ")
+        return Snack(name, exp, price, weight, c_name)
     
     def searchMenu():
         return input("검색어 : ")
@@ -48,7 +49,7 @@ class ConsoleScreen:
     def printSnacks(snacks):
         for s in snacks:
             print(s.name, s.price, s.weight)
-            print(s.manufacturerName)
+            print(s.c_name)
             print(s.exp)
             print('-----------')
 

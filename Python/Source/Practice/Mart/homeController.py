@@ -30,30 +30,40 @@ if __name__ == "__main__":
         menu = ConsoleScreen.showMainMenu()
         if menu == "10":
             break
+
         elif menu == '1':
             m = ConsoleScreen.showRegManufacturerMenu()
             result = mDAO.reg(m)
             ConsoleScreen.printResult(result)
+
         elif menu == '2':
             s = ConsoleScreen.showRegSnackMenu()
             result = sDAO.reg(s)
             result = ConsoleScreen.printResult(result)
+
         elif menu == '3':
             manufacturers = mDAO.getAll()
             ConsoleScreen.printManufacturers(manufacturers)
+        
         elif menu == '4':
             snacks = sDAO.getAll()
             ConsoleScreen.printSnacks(snacks)
+        
         elif menu == '5':
-            pageCount = mDAO.getAllPageCount()
+            pageCount = mDAO.getAllPageCount("")
             pageNo = ConsoleScreen.showSelectPageMenu(pageCount)
             manufacturers = mDAO.get(pageNo)
             ConsoleScreen.printManufacturers(manufacturers)
+        
         elif menu == '6':
             pageCount = sDAO.getPageCount("")
             pageNo = ConsoleScreen.showSelectPageMenu(pageCount)
             snacks = sDAO.get(pageNo, "")
             ConsoleScreen.printSnacks(snacks)
+
+        elif menu == '7':
+            pass
+       
         elif menu == '8':
             searchTxt = ConsoleScreen.searchMenu()
             pageCount = sDAO.getSearchSnackCount(searchTxt)
@@ -61,4 +71,5 @@ if __name__ == "__main__":
             snacks = sDAO.get(pageNo, searchTxt)
             ConsoleScreen.printSnacks(snacks)
 
-
+        elif menu == '9':
+            pass
