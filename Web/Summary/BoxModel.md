@@ -1,0 +1,11 @@
+## Box Model
+- CSS는 모든 HTML DOM객체를 박스모델로 관리
+- margin : 외부 여백
+- border : 테두리
+    - -top, -left, -bottom, -right : 선택 가능
+- padding : 내부 여백
+- width, height : 박스 사이즈
+- positon : 좌표 체계
+    - absolute : html 기준(스크롤할 때 안 따라옴)
+    - fixed : 브라우저 기준(스크롤할 때 따라와서 자리 지킴)
+- left, top : 위치
