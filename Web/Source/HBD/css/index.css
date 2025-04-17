@@ -1,0 +1,66 @@
+/* css/birthday.css */
+@font-face {
+    font-family: 'Ownglyph_ParkDaHyun';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Ownglyph_ParkDaHyun';
+  background-color: #fff6f0;
+  color: #333;
+}
+
+#header {
+  background-color: #fcdde0;
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#header h1 {
+  margin: 0;
+  font-size: 28pt;
+  color: #d65f8c;
+}
+
+nav {
+  margin-top: 10px;
+}
+
+nav a {
+  margin: 0 20px;
+  text-decoration: none;
+  color: #7c5e99;
+  font-size: 16pt;
+  transition: all 0.2s ease-in-out;
+}
+
+nav a:hover {
+  color: #c38bdc;
+  font-size: 18pt;
+}
+
+#mainContent {
+  padding-top: 150px;
+  text-align: center;
+}
+
+.main-photo {
+  width: 300px;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+span {
+  font-size: 20pt;
+}
