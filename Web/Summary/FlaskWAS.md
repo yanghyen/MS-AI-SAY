@@ -23,10 +23,11 @@ if __name__ == "__main":
 - 서버는 그 요청에 대해 응답
 - 요청
     - GET 방식 : 주소를 직접 입력. <a>  
-        요청 param이 주소를 통해 전달
+        요청 param이 주소를 통해 전달  
     - POST 방식 : form을 통해서     
         보안성 높음  
-        요청 param이 내부적으로 전달
+        요청 param이 내부적으로 전달  
+        변수 여러개 받을 때 써야 됨
 - request parameter : 클라이언트가 WAS로 보내는 정보
 - form + button
     - form 속 button 누르면 action에 있는 쪽으로 요청 날려줌
