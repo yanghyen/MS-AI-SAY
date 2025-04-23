@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ㅋ</title>
+    <link rel="stylesheet" href="bmiCheck.css">
+    <script src="yangValidCheckder.js"></script>
+    <script src="bmiValidCheck.js"></script>
+</head>
+<body>
+    <form action="http://195.168.9.180:9999/bmi.check"
+        name="joinForm"
+        onsubmit="return check();" 
+        method="post"
+        enctype="multipart/form-data">
+        <table>
+        <tr><th colspan="2">BMI 췤</th></tr>
+        <tr>
+            <td class="td1">이름</td>
+            <td>
+                <input name="name" maxlength="10" autocomplete="off">
+            </td>
+        </tr>
+        <tr>
+            <td class="td1">키</td>
+            <td>
+                <input name="height" maxlength="10">
+            </td>
+        </tr>
+        <tr>
+            <td class="td1">몸무게</td>
+            <td>
+                <input name="weight" maxlength="3">
+            </td>
+        </tr>
+        <tr>
+            <td class="td1">사진</td>
+            <td>
+                <input name="photo" type="file">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button class="btnType">...(*￣０￣)ノ</button>
+            </td>
+        </tr>
+    </table>
+    </form>
+    
+</body>
+</html>
