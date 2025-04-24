@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>hi</title>
+    <script src="jQuery.js"></script>
+    <script>
+        // $(document).ready(function abcd() {
+        //     alert("hello");
+        // });    // body의 load이벤트와 동일 -> main 역할
+
+        $(function () {
+            var si = $("secondInput");
+
+            $("button").click(function(){
+                alert(si.val());
+            });
+        });
+    </script>
+</head>
+
+<body onload="mainnn();">
+    <input>
+    <input id="secondInput">
+    <button>ㅋ</button>
+    <button>ㅋ</button>
+    <button>ㅋ</button>
+    <button>ㅋ</button>
+    <button>ㅋ</button>
+</body>
+
+</html>

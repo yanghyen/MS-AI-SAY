@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>하이하잉</title>
+        <script src="jQuery.js"></script>
+        <script>
+           $(function () {
+
+                var red = true;
+                var t;
+               $("#b5").click(function () {
+                    // setTimeout(콜백함수, 시간(밀리초)) - 딜레이
+                    // setInterval(콜백함수, 시간(밀리초)) - 반복
+                        // clearInterval(변수명)        - setInterval 멈추기
+                    t = setInterval(function () {
+                        var x = Math.random() * 1000;
+                        var y = Math.random() * 1000;
+                        $("img").css("top", y + "px").css("left", x + "px");
+                    }, 500);
+               });
+               $("img").click(function(){
+                    clearInterval(t);
+               });
+           });
+        </script>
+        <style>
+            h1 {
+                color: red;
+            }
+            img {
+                transition: all 0.3s ease-in;
+                position: fixed;
+                top: 0px;
+                left: 0px;
+                width: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>히히</h1>
+        <button id="b1">글자색 바꾸기</button>
+        <button id="b2">바꾸기</button>
+        <button id="b3">바꾸기</button>
+        <button id="b4">바꾸기</button>
+        <button id="b5">바꾸기</button>
+        <hr>
+        <img src="img/nami.png">
+    </body>
+</html>

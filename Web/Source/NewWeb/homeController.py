@@ -16,5 +16,13 @@ def snackGet():
     return JSONResponse(resBody, headers=resHeader)
 
 @app.get("/product.reg")
-def snackReg():
-    pass
+def productReg(namee, pricee):
+    resBody = pDAO.reg(namee, pricee)
+    resHeader = {"Access-Controller-Allow-Origin" : "*"}
+    return JSONResponse(resBody, headers=resHeader)
+
+@app.get("/product.dele")
+def productDele(minn, maxx):
+    resBody = pDAO.dele(minn, maxx)
+    resHeader = {"Access-Controller-Allow-Origin" : "*"}
+    return JSONResponse(resBody, headers=resHeader)
