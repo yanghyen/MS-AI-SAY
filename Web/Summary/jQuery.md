@@ -30,3 +30,47 @@ $(function () {
 
 ### event-driven programming
 - 이벤트에 콜백함수 연결해서 진행
+
+### 반복문(for, for of, while)
+- ```$(선택자).each(콜백함수);```
+- DOM객체 탐색용
+    ```html 
+    // iii : index, vvv : value
+    $("h1").each(function (iii, vvv) {
+        alert(iii);
+        alert(vvv);
+    });
+    ```
+- JS배열 탐색용 -> JSON 파싱
+    ```html
+     var css = [
+        {c:"pink", bgc:"black"},
+        {c:"green", bgc:"#38190a"},
+        {c:"baby pink", bgc:"#38190a"}
+    ];
+    $("h2").each(function(i, h2){
+        $(h2).css("color", css[i].c);
+        $(h2).css("background-color", css[i].bgc);
+    });
+    ```
+### 선택한 객체에 대해서만 이벤트 적용하기
+- this : 이벤트가 발생한 객체(콜밸함수를 호출한 대상)
+```html
+$("button").click(function () {
+    $(this).css("background-color", "red");
+});
+```
+- .parent() : 한단계 상위
+- .closest("CSS선택자") : 상위로 올라가다가 가장 가까운 거
+- .children() : 한단계 하위들
+- .find("CSS선택자") : 하위로 내려가다가 가장 가까운 거
+### 수정
+- .text(바꿀거)
+- .html(바꿀거)
+- 바꿀거에 내용 없으면 그냥 내용 가져옴
+### DOM객체 생성
+- ```$("<button></button>")``` : 버튼 생성
+- ```$("button")``` : 버튼 불러오기
+### jQuery + VanillaJS
+- jQuery를 써서 동적으로 추가된 DOM객체들의 이벤트 처리 
+- 콜백함수에 값 전달

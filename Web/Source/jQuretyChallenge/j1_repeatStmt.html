@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            $("h1").each(function (iii, vvv) {
+                $(vvv).css("font-size", (iii+1)*10+"pt");
+            });
+            var cats = [
+                {name : "나미", age: 13},
+                {name : "우춘", age: 1},
+                {name : "달", age: 7},
+                {name : "별", age: 5}
+            ];
+            $.each(cats, function(idx, val) {
+                // alert(val.name);
+                // alert(val.age);
+            });
+            var css = [
+                {c:"pink", bgc:"black"},
+                {c:"green", bgc:"#38190a"},
+                {c:"baby pink", bgc:"#38190a"}
+            ];
+            $("h2").each(function(i, h2){
+                $(h2).css("color", css[i].c);
+                $(h2).css("background-color", css[i].bgc);
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>ㄱㄱㄱ</h2>
+    <h2>ㄴㄴㄴ</h2>
+    <h2>ㄷㄷㄷ</h2>
+    <h1>하이하잉</h1>    
+    <h1>졸려엉</h1>    
+    <h1>카피바라</h1>    
+</body>
+</html>

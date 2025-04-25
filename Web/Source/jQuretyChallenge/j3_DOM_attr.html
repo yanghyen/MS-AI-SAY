@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            $("#b1").click(function () {
+                $("a").attr("href", "https://www.google.com");
+                $("a").text("구글로");
+            });
+            $("#b2").click(function () {
+                alert($("a").attr("href"));
+            });
+            $("#b3").click(function () {
+                $("a").attr("href", "");
+            });
+            num=[
+                {num:1},
+                {num:2},
+                {num:3},
+                {num:4},
+                {num:5}
+            ]
+            var i = 1;
+            setInterval(function () {
+                $("img").attr("src", "cocos2d/hero_walk_0" + i + ".png");
+                i++;
+                if (i == 6) {
+                    i = 1;
+                }
+            }, 100);
+        });
+    </script>
+</head>
+<body>
+    <a href="https://www.naver.com">네이버로</a><br>
+    <button id="b1">수정</button>
+    <button id="b2">확인</button>
+    <button id="b3">삭제</button>
+    <hr>
+    <img src="cocos2d/hero_walk_01.png">
+</body>
+</html>

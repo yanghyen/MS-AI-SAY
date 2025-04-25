@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="jQuery.js"></script>
+    <script>
+        function addBtn() {
+            var b = $("<button></button>").attr("onclick", "addBtn();").text("ㅎㅎ");
+            $("body").append(b);
+        }
+    </script>
+</head>
+<body>
+    <button onclick="addBtn();">ㅋㅋ</button>
+</body>
+</html>
