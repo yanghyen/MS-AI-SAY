@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            var paper = document.getElementById("c");
+            var pen = paper.getContext("2d");
+            pen.save();
+            pen.fillStyle = "#0d8702";
+            pen.fillRect(0, 0, 600, 400);
+
+            var isDrawing = false;
+            var lastX = 0;
+            var lastY = 0;
+
+            pen.strokeStyle = "white";
+            pen.lineWidth = 5;
+            pen.lineCap = "round"; // 선 끝을 둥글게 만들기
+
+            $("canvas").mousedown(function(e){
+                isDrawing = true;
+                lastX = e.offsetX;
+                lastY = e.offsetY;
+            });
+            
+            $("canvas").mousemove(function(e){
+                if (!isDrawing) return;
+
+                var currentX = e.offsetX;
+                var currentY = e.offsetY;
+
+                pen.beginPath();
+                pen.moveTo(lastX, lastY);
+                pen.lineTo(currentX, currentY);
+                pen.stroke();
+                pen.closePath();
+
+                lastX = currentX;
+                lastY = currentY;
+            });
+
+            $("canvas").mouseup(function(){
+                isDrawing = false;
+            });
+
+            $("canvas").mouseleave(function(){
+                isDrawing = false;
+            });
+        });
+    </script>
+</head>
+<body>
+    <canvas id="c" width="600px" height="400px">
+
+    </canvas>
+</body>
+</html>

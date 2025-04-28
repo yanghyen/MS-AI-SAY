@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            // 우클릭 햇을 때 브라우저의 팝업 메뉴 안 나오게
+            $(document).contextmenu(function(){
+                return false;
+            });
+            $("html").mouseup(function(e){
+                if(e.button == 2){
+                    $("table").css("top", e.pageY + "px");
+                    $("table").css("left", e.pageX + "px");
+                    $("table").css("opacity", "1");
+                    
+                    setTimeout(function(){
+                        $("table").css("opacity", "0");
+                        setTimeout(function(){
+                            $("table").css("top", "-100px");
+                            $("table").css("left", "-100px");
+                        }, 300);
+                    }, 3000);
+                };
+            });
+        });
+    </script>
+    <style>
+        table{
+            position: absolute;
+            top:-100px;
+            left:-100px;
+            transition: opacity 0.3s ease-in;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <td><a href="https://www.naver.com">네이버로</a></td>
+        </tr>
+        <tr>
+            <td><a href="https://www.google.com">구글로</a></td>
+        </tr>
+        <tr>
+            <td><a href="https://www.daum.net">다음으로</a></td>
+        </tr>
+    </table>
+    
+</body>
+</html>

@@ -74,3 +74,8 @@ $("button").click(function () {
 ### jQuery + VanillaJS
 - jQuery를 써서 동적으로 추가된 DOM객체들의 이벤트 처리 
 - 콜백함수에 값 전달
+### 기능
+- 원래 아무 일도 없던 이벤트
+- 원래 기능이 있던 이벤트
+    - return true : 원래 있던 기능 발동
+    - return false : 원래 있던 기능 제거
