@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>open weather</title>
+    <script src="jQuery.js"></script>
+    <script>
+        navigator.geolocation.getCurrentPosition(function (addr) {
+            var lat = addr.coords.latitude;
+            var lng = addr.coords.longitude;
+            // $.ajax({
+            //     url: "https://api.openweathermap.org/data/2.5/weather",
+            //     data: {
+            //         lat: lat, lon: lon,
+            //         appid: "baff8f3c6cbc28a4024e336599de28c4",
+            //         units: "metric", lang: "kr"
+            //     },
+            //     success: function (asd) {
+            //         alert(asd);
+            //     }
+            // });
+            var url = "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lng+"&appid=baff8f3c6cbc28a4024e336599de28c4"
+            $.getJSON(url, function(asd){
+                // alert(JSON.stringify(asd));
+                var temp = asd.main.temp;
+                var humidity = asd.main.humidity;
+                var desc = asd.weather[0].description;
+                var icon = asd.weather[0].icon;
+                var photoUrl = "https://openweathermap.org/img/wn/"+icon+"@2x.png"
+                var temp_td = $("<td></td>").text(temp);
+                var humidity_td = $("<td></td>").text(humidity);
+                var desc_td = $("<td></td>").text(desc);
+                var tr = $("<tr></tr>").append()
+            });
+            $("#btn").click(function () {
+
+            });
+
+        });
+        
+    </script>
+</head>
+
+<body>
+    <button id="btn">(ToT)/~~~</button>
+    <table>
+        <tr>
+            <th>온도</th>
+            <th>습도</th>
+            <th>어땡</th>
+            <th>봐봐</th>
+        </tr>
+    </table>
+</body>
+
+</html>

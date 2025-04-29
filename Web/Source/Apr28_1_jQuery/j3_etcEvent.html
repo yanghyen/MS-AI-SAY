@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ㅋ</title>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            $("select").change(function () {
+                alert($(this).val());
+            });
+
+            // document : 이 html
+            // window : 브라우저(front-end)
+            // navigator : 브라우저(back-end)
+            // alert(navigator.userAgent); // 접속한 브라우저 정보를 문자열로
+            if (navigator.userAgent.indexOf("Android") != -1 ||
+                navigator.userAgent.indexOf("iPhone") != -1) {
+                location.href = "https://www.naver.com";
+            }
+
+
+            $(window).resize(function () {
+                var w = $(window).width();
+                var h = $(window).height();
+                $("h1").text(w + "," + h);
+            });
+
+            $(window).scroll(function(){
+                var htmlHeightBlack = $(document).height();
+                var browserHeightRed = $(window).height();
+                var scrollOffsetGreen = $(window).scrollTop();
+                var scrollOffsetBottomBlue = scrollOffsetGreen + browserHeightRed;
+
+                if (scrollOffsetBottomBlue >= htmlHeightBlack - 10){
+                    var h3 = $("<h3></h3>").text("추가");
+                    $("body").append(h3);
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <select>
+        <option>ㅋㅋㅋ</option>
+        <option>ㅎㅎㅎ</option>
+        <option>ㅇㅇ</option>
+    </select>
+    <h1></h1>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+    <h2>ㅋㅋㅋ</h2>
+</body>
+
+</html>

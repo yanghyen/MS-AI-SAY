@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>jQuery CDAJAX</title>
+        <script src="jQuery.js"></script>
+        <script src="https://cdn.canvasjs.com/canvasjs.min.js"> </script>
+    <script>
+        $(function () {
+            $.ajax({
+                url : "http://openapi.seoul.go.kr:8088/575a4655496b636839386f58586542/xml/RealtimeCityAir/1/25/",
+                success : function(asd){
+                    var pm10Ar = [];
+                    var pm25Ar = [];
+                    $(asd).find("row").each(function(i, r) {
+                        pm10Ar[i] = { label: msrste_nm, y: pm10 * 1 };
+                        pm25Ar[i] = { label: msrste_nm, y: pm25 * 1 };
+                        var msrrgn_nm = $(r).find("MSRRGN_NM").text();
+                        var msrrgn_nm_td = $("<td></td>").text(msrrgn_nm);
+                        var msrste_nm = $(r).find("MSRSTE_NM").text();
+                        var msrste_nm_td = $("<td></td>").text(msrste_nm);
+                        var pm10 = $(r).find("PM10").text();
+                        var pm10_td = $("<td></td>").text(pm10);
+                        var pm25 = $(r).find("PM25").text();
+                        var pm25_td = $("<td></td>").text(pm25);
+                        var idex_nm = $(r).find("IDEX_NM").text();
+                        var idex_nm_td = $("<td></td>").text(idex_nm);
+                        var tr = $("<tr></tr>").append(msrrgn_nm_td, msrste_nm_td, pm10_td, pm25_td, idex_nm_td);
+                        $("table").append(tr);
+
+
+                    });
+                    var chart = new CanvasJS.Chart("chartContainer", {
+                        animationEnabled: true,
+                        title:{
+                            text: "미세먼지",
+                            fontFamily: "arial black",
+                            fontColor: "#695A42"
+                        },
+                        axisX: {
+                            interval: 1,
+                            intervalType: "year"
+                        },
+                        axisY:{
+                            valueFormatString:"$#0bn",
+                            gridColor: "#B6B1A8",
+                            tickColor: "#B6B1A8"
+                        },
+                        toolTip: {
+                            shared: true,
+                            content: toolTipContent
+                        },
+                        data: [{
+                            type: "stackedColumn",
+                            showInLegend: true,
+                            color: "#696661",
+                            name: "Q1",
+                            dataPoints: [
+                                pm10Ar
+                            ]
+                            },
+                            {        
+                                type: "stackedColumn",
+                                showInLegend: true,
+                                name: "Q2",
+                                color: "#EDCA93",
+                                dataPoints: [
+                                    pm25Ar
+                                ]
+                            }]
+                    });
+                    chart.render();
+        
+                    function toolTipContent(e) {
+                        var str = "";
+                        var total = 0;
+                        var str2, str3;
+                        for (var i = 0; i < e.entries.length; i++){
+                            var  str1 = "<span style= \"color:"+e.entries[i].dataSeries.color + "\"> "+e.entries[i].dataSeries.name+"</span>: $<strong>"+e.entries[i].dataPoint.y+"</strong>bn<br/>";
+                            total = e.entries[i].dataPoint.y + total;
+                            str = str.concat(str1);
+                        }
+                        str2 = "<span style = \"color:DodgerBlue;\"><strong>"+(e.entries[0].dataPoint.x).getFullYear()+"</strong></span><br/>";
+                        total = Math.round(total * 100) / 100;
+                        str3 = "<span style = \"color:Tomato\">Total:</span><strong> $"+total+"</strong>bn<br/>";
+                        return (str2.concat(str)).concat(str3);
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <th>권역</th>
+            <th>구</th>
+            <th>미세먼지</th>
+            <th>초미세먼지</th>
+            <th>상태</th>
+        </tr>
+    </table>
+    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+</body>
+</html>
