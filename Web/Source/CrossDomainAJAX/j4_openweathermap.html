@@ -27,29 +27,39 @@
                 var humidity = asd.main.humidity;
                 var desc = asd.weather[0].description;
                 var icon = asd.weather[0].icon;
-                var photoUrl = "https://openweathermap.org/img/wn/"+icon+"@2x.png"
-                var temp_td = $("<td></td>").text(temp);
-                var humidity_td = $("<td></td>").text(humidity);
-                var desc_td = $("<td></td>").text(desc);
-                var tr = $("<tr></tr>").append()
-            });
-            $("#btn").click(function () {
+                var imgSrc = "https://openweathermap.org/img/wn/"+icon+"@2x.png"
+                
+                var temp2 = temp + "℃(" + humidity + "%)";
+                $("#tempTd").text(temp2);
 
+                $("#weatherTd").text(desc);
+                $("img").attr("src", imgSrc);
             });
-
+            $("html").mousemove(function(e){
+                $("table").css("top", e.pageY+5+"px");
+                $("table").css("left", e.pageX+5+"px");
+            });
         });
         
     </script>
+    <style>
+        table{
+            position: fixed;
+        }
+    </style>
 </head>
 
 <body>
     <button id="btn">(ToT)/~~~</button>
     <table>
         <tr>
-            <th>온도</th>
-            <th>습도</th>
-            <th>어땡</th>
-            <th>봐봐</th>
+            <td align="center" rowspan="2">
+                <img>
+            </td>
+            <td id="weatherTd"></td>
+        </tr>
+        <tr>
+            <td align="right" id="tempTd"></td>
         </tr>
     </table>
 </body>

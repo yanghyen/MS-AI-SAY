@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>지도 테스트</title>
+    <script src="jQuery.js"></script>
+    <script
+        src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=6e2377538e7c2d476494bdd32b7161a0&libraries=services"></script>
+    <script>
+        let map;
+
+        $(function () {
+            navigator.geolocation.getCurrentPosition(function (addr) {
+                var lat = addr.coords.latitude;
+                var lng = addr.coords.longitude;
+                var ll = new kakao.maps.LatLng(lat, lng);
+
+                var mapArea = document.getElementById('map');
+
+                var map = new kakao.maps.Map(mapArea, {center:ll, level:3});
+
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: ll
+                });
+
+                var rvArea = document.getElementById('rv'); //로드뷰를 표시할 div
+                var rvManager = new kakao.maps.RoadviewClient(); //좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper객체
+                rvManager.getNearestPanoId(ll, 100, function(panoId){
+                    var roadview = new kakao.maps.Roadview(rvArea, {
+                        panoId : panoId
+                    }); //로드뷰 객체
+                });
+
+            });
+
+            $("button").click(function () {
+                var searchTxt = $("input").val();
+                var ps = new kakao.maps.services.Places();
+                ps.keywordSearch(searchTxt, function(data, status){
+                    if (status === kakao.maps.services.status.OK){
+                        var bounds = new kakao.maps.LatLngBounds();
+                        for (var i = 0; i < data.length; i++){
+                            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+                        }
+                        map.setBounds(bounds);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div id="container" style="display: flex;">
+        <div id="map" style="width:500px;height:400px;"></div>
+        <div id="rv" style="width:500px;height:400px;"></div>
+    </div>
+    <input><button>(ToT)/~~~</button>
+</body>
+
+</html>
