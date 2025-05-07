@@ -3,8 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>지도 테스트</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+    <title>Wel Korea</title>
     <script
         src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=6e2377538e7c2d476494bdd32b7161a0&libraries=services"></script>
     <script>
@@ -41,27 +43,7 @@
                 moveMap(lat, lng);
             });
 
-            $("#search1").keyup(function (e) {
-                if (e.keyCode == 13) {
-                    var search1Txt = $(this).val();
-                    $.ajax({
-                        url: "https://dapi.kakao.com/v2/local/search/address.json",
-                        data: { query: search1Txt },
-                        beforeSend: function (req) {
-                            req.setRequestHeader("Authorization", "KakaoAK 48412524e1d7ccbf166a18a4687b943e")
-                        },
-                        success: function (search1Data) {
-                            if (search1Data.documents && search1Data.documents.length > 0) {
-                                moveMap(search1Data.documents[0].y, search1Data.documents[0].x);
-                            } else {
-                                alert("검색 결과가 없습니다.");
-                            }
-                        }
-                    })
-                }
-
-            });
-            $("#search2").keyup(function (e) {
+            $("#search").keyup(function (e) {
                 if (e.keyCode == 13) {
                     var search2Txt = $(this).val();
                     $.ajax({
@@ -94,26 +76,31 @@
 
 
     </script>
+
 </head>
 
 <body>
-    <table id="container" style="display: flex;">
-        <tr>
-            <td id="map" style="width:500px;height:400px;"></td>
-            <td id="rv" style="width:500px;height:400px;"></td>
-        </tr>
-        <tr>
-            <td>
-                <input id="search1" placeholder="지역">
-            </td>
-            <td>
-                <input id="search2" placeholder="뭐">
-            </td>
-        </tr>
-        <tr>
-            <td id="resultArea"></td>
-        </tr>
-    </table>
+    <div data-role="page" id="p1">
+        <div data-role="header" data-position="fixed">
+            <h1>Wel Korea</h1>
+        </div>
+        <div data-role="content">
+            <table id="container" style="display: flex;">
+                <tr>
+                    <td id="map" style="width:500px;height:400px;"></td>
+                    <td id="rv" style="width:500px;height:400px;"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input id="search1" placeholder="keyword">
+                    </td>
+                </tr>
+                <tr>
+                    <td id="resultArea"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </body>
 
 </html>
