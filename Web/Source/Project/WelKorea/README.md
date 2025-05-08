@@ -152,7 +152,8 @@ keywordSearch("Kkua")
 
 ### 💡 팁: 로컬 캐시 활용
 
-자주 번역하는 키워드는 OracleDB에 캐싱해두면 API 요금도 줄이고 속도도 개선할 수 있습니다.
+자주 번역하는 키워드는 OracleDB에 캐싱해두면 API 요금도 줄이고 속도도 개선할 수 있습니다.  
+(이때 발음대로 입력한 것과 의미대로 입력한 것 구분해서 번역해야 함!)
 
 ```sql
 SELECT korean FROM translation_cache WHERE english = 'kkua';
