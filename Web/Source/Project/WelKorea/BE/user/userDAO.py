@@ -2,7 +2,7 @@ from hyenLib.oracleDBManager import OracleDBManager
 
 
 class UserDAO:
-    def getA(self):
+    def get(self):
         pass
             
 

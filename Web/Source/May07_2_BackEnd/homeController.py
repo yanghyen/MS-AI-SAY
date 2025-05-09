@@ -8,8 +8,15 @@ mDAO = MachineDAO()
 
 
 @app.get("/machine.get")
-def machineGet():
-    result = mDAO.get()
+def machineGet(page, search):
+    result = mDAO.get(page, search)
+    h = {"Access-Control-Allow-Origin": "*"}
+    return JSONResponse(result, headers=h)
+
+
+@app.get("/machine.get.detail")
+def machineGetDetail(no):
+    result = mDAO.getDetail(no)
     h = {"Access-Control-Allow-Origin": "*"}
     return JSONResponse(result, headers=h)
 

@@ -22,19 +22,35 @@ class MachineDAO:
         finally:
             KwonDBManager.closeConCur(con, cur)
 
-    def get(self):
+    def get(self, page, search):
         try:
             machineCount = self.allMachineCount
+            if search != "":
+                machineCount = self.getSearchMachineCount(search)
+            search = "%" + search + "%"
             pageCount = ceil(machineCount / self.machinePerPage)
+
+            page = int(page)
+            start = (page - 1) * self.machinePerPage + 1
+            end = page * self.machinePerPage
 
             con, cur = KwonDBManager.makeConCur("kwon/1@195.168.9.201:1521/xe")
 
-            sql = "select * from may07_deepracer_machine "
-            sql += "order by dm_check_date desc"
+            sql = "SELECT * "
+            sql += "FROM ( "
+            sql += "    SELECT rownum AS rn, dm_no, dm_color, dm_status, dm_check_date "
+            sql += "    FROM ( "
+            sql += "        SELECT * "
+            sql += "        FROM may07_deepracer_machine "
+            sql += "        where dm_color like '%s' " % search
+            sql += "        ORDER BY DM_CHECK_DATE desc "
+            sql += "    )"
+            sql += ") "
+            sql += "WHERE rn >= %d AND rn <= %d" % (start, end)
 
             cur.execute(sql)
             machines = []
-            for no, color, status, checkDate in cur:
+            for _, no, color, status, checkDate in cur:
                 m = {
                     "no": no,
                     "color": color,
@@ -42,13 +58,51 @@ class MachineDAO:
                     "checkDate": datetime.strftime(checkDate, "%Y/%m/%d %H:%M"),
                 }
                 machines.append(m)
-            result = {
-                "pageCount" : pageCount,
-                "machines" : machines
-            }
+            result = {"pageCount": pageCount, "machines": machines}
             return result
         except:
             return {"result": "조회 실패"}
+        finally:
+            KwonDBManager.closeConCur(con, cur)
+
+    def getDetail(self, no):
+        try:
+            con, cur = KwonDBManager.makeConCur("kwon/1@195.168.9.201:1521/xe")
+
+            sql = "SELECT * "
+            sql += "FROM may07_deepracer_machine "
+            sql += "where dm_no = %s" % no
+
+            cur.execute(sql)
+            for no, color, status, checkDate in cur:
+                m = {
+                    "no": no,
+                    "color": color,
+                    "status": status,
+                    "checkDate": datetime.strftime(checkDate, "%Y/%m/%d %H:%M"),
+                }
+            return m
+        except:
+            return {"result": "조회 실패"}
+        finally:
+            KwonDBManager.closeConCur(con, cur)
+
+    def getSearchMachineCount(self, searchTxt):
+        try:
+            con, cur = KwonDBManager.makeConCur("kwon/1@195.168.9.201:1521/xe")
+
+            searchTxt = "%" + searchTxt + "%"
+
+            sql = "SELECT count(*) "
+            sql += "FROM may07_deepracer_machine "
+            sql += "where dm_color like '%s'" % searchTxt
+
+            cur.execute(sql)
+            for r in cur:
+                return r[0]
+            return -1
+        except:
+            return -1
         finally:
             KwonDBManager.closeConCur(con, cur)
 

@@ -1,20 +1,21 @@
 from fastapi import FastAPI, Response
 from fastapi.responses import JSONResponse
 
-from placeDAO import PlaceDAO
+from BE.place.placeDAO import PlaceDAO
 
 
 app = FastAPI()
 pDAO = PlaceDAO()
 
-@app.get("/place.get")
+# 이 /place.get은 조회해보려고 대충 만든거임
+@app.get("/place100.get")
 def placeGet():
     resBody = pDAO.get()
-    resHeader = {"Access-Controller-Allow-Origin" : "*"}
-    return Response(resBody, headers=resHeader)
+    resHeader = {"Access-Control-Allow-Origin" : "*"}
+    return JSONResponse(resBody, headers=resHeader)
 
-@app.get("/place.reg")
-def placeReg(name_kor, name_eng, addr):
-    resBody = pDAO.reg(name_kor, name_eng, addr)
-    resHeader = {"Access-Controller-Allow-Origin" : "*"}
+@app.get("/place100.reg")
+def placeReg(name: str, desc: str):
+    resBody = pDAO.reg(name, desc)
+    resHeader = {"Access-Control-Allow-Origin" : "*"}
     return JSONResponse(resBody, headers=resHeader)

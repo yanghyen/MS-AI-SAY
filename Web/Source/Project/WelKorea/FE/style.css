@@ -1,0 +1,84 @@
+/* 전체 폰트와 배경 설정 */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* 헤더 디자인 */
+[data-role="header"] {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    border-bottom: 2px solid #388E3C;
+}
+
+[data-role="header"] h1 {
+    margin: 0;
+    padding: 15px 0;
+    font-size: 1.5em;
+}
+
+/* 콘텐츠 여백 조정 */
+[data-role="content"] {
+    padding: 20px;
+}
+
+/* 버튼 스타일 */
+a[data-role="button"] {
+    background-color: #4CAF50 !important;
+    border: none !important;
+    padding: 10px 16px;
+    border-radius: 8px !important;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1em;
+    margin-left: 10px;
+}
+
+/* 검색 결과 카드 스타일 */
+#resultArea div {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#resultArea div:hover {
+    transform: scale(1.02);
+}
+
+#resultArea button {
+    background: none;
+    border: none;
+    color: #e91e63;
+    font-size: 1.2em;
+}
+
+/* 리스트 스타일 */
+#placeList li {
+    background-color: white;
+    border-bottom: 1px solid #eee;
+    padding: 12px;
+    font-size: 1em;
+}
+
+/* 페이지네이션 */
+#pageControlArea td a {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 4px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+}
+
+#pageControlArea td a:hover {
+    background-color: #ddd;
+}
