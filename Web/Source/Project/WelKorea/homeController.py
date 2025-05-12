@@ -14,6 +14,12 @@ def placeGet():
     resHeader = {"Access-Control-Allow-Origin" : "*"}
     return JSONResponse(resBody, headers=resHeader)
 
+@app.get("/place100.get.detail")
+def placeGetDetail(no):
+    resBody = pDAO.getDetail(no)
+    resHeader = {"Access-Control-Allow-Origin" : "*"}
+    return JSONResponse(resBody, headers=resHeader)
+
 @app.get("/place100.reg")
 def placeReg(name: str, desc: str):
     resBody = pDAO.reg(name, desc)

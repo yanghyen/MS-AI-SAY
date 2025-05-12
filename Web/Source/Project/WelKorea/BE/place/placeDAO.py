@@ -45,6 +45,33 @@ class PlaceDAO:
         finally:
             OracleDBManager.closeConCur(con, cur)
 
+    def getDetail(self, no):
+        try:
+            con, cur = OracleDBManager.makeConCur("yanghyen/0317@195.168.9.126:1521/xe")
+
+            sql = '''SELECT * FROM may7_places WHERE p_no = %s''' % no
+            
+            cur.execute(sql)
+            for no, name_kor, name_eng, translated_name_eng, address, lat, lng, created_at, last_searched_at, desc in cur:
+                p = {
+                    "no" : no,
+                    "name_kor" : name_kor,
+                    "name_eng" : name_eng,
+                    "translated_name_eng" : translated_name_eng,
+                    "address" : address,
+                    "lat" : lat,
+                    "lng" : lng,
+                    "created_at" : created_at.strftime('%Y-%m-%d %H:%M:%S') if last_searched_at else None,  # datetime을 문자열로 변환
+                    "last_searched_at" : last_searched_at.strftime('%Y-%m-%d %H:%M:%S') if last_searched_at else None,
+                    "desc" : desc
+                }
+                return p
+        except Exception as e:
+            print(e)
+            return {"result" : "조회 실패"}
+        finally:
+            OracleDBManager.closeConCur(con, cur)
+            
     def reg(self, name, desc):
         try: 
             con, cur = OracleDBManager.makeConCur("yanghyen/0317@195.168.9.126:1521/xe")
@@ -57,7 +84,6 @@ class PlaceDAO:
             else:
                 return "등록 실패"
         except Exception as e:
-            print(e)
             return "등록 실패"
         finally:
             OracleDBManager.closeConCur(con, cur)

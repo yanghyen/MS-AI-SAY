@@ -3,7 +3,9 @@ NoSQL
 - 테이블 안 나누고 변수 있음 -> subquery/join 없음
 - use DB명;
 
-
+### 접속
+- mongosh폴더 가서 cmd
+- mongosh 서버 IP주소 
 ### Create
 ```db.테이블명.insertOne({멤버변수명:값, 멤버변수명:값, ...});```
 - 테이블 따로 안 만들고 그냥 insert하면 됨 

@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <div data-role="page" id="p1">
+    <div data-role="page" id="mainPage">
         <div data-role="header" data-position="fixed">
             <h1>Wel Korea</h1>
         </div>
@@ -27,16 +27,16 @@
 
             <div style="margin-top: 15px;">
                 <input id="search" placeholder="Search keyword..." style="width: 200px; padding: 5px;" />
-                <a href="#p2" data-role="button">Wel 100</a>
+                <a href="#Wel100" data-role="button">Wel 100</a>
             </div>
 
             <div id="resultArea" style="margin-top: 10px;"></div>
         </div>
     </div>
 
-    <div data-role="page" id="p2">
+    <div data-role="page" id="Wel100">
         <div data-role="header" data-position="fixed">
-            <a href="#p1" data-icon="arrow-l">back</a>
+            <a href="#mainPage" data-icon="arrow-l">back</a>
             <h1>Wel 100</h1>
         </div>
         <div data-role="content">
@@ -44,6 +44,27 @@
             <input id="place_desc_input" placeholder="What was good about it?">
             <button id="place_input_btn">reg</button>
             <ul id="placeList" data-role="listview" data-inset="true"></ul>
+        </div>
+    </div>
+
+    <div data-role="page" id="detailPage">
+        <div data-role="header">
+            <a href="#Wel100" data-transition="slidedown" data-icon="arrow-l">back</a>
+            <h1>Wel Korea</h1>
+        </div>
+        <div data-role="content">
+            no.
+            <input id="detailNoInput" readonly>
+            place name
+            <input id="detailEngNameInput">
+            place name K
+            <input id="detailKorNameInput">
+            description
+            <input id="detailDescInput">
+            created date
+            <input id="detailDateInput" readonly>
+            <button id="detailUpdateBtn">Update</button>
+            <button id="detailDelBtn">Delete</button>
         </div>
     </div>
 </body>

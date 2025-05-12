@@ -84,7 +84,11 @@ function searchKeyword() {
     });
 }
 
-
+function connectCoverpageGoEvent() {
+    $("#goCoverPageA").click(function(){
+        mainPage = false;
+    });
+}
 
 
 function getPlaceData(page) {
@@ -93,7 +97,11 @@ function getPlaceData(page) {
         $.each(json.places, function(i, p){
             var br1 = $("<br>");
             var br2 = $("<br>");
-            var li = $("<li></li>").append(p.name_eng, br1, p.name_kor, br2);
+            var br3 = $("<br>");
+            var a = $("<a></a>").attr("href", "#detailPage")
+                .attr("onclick", "goDetailPage(" + p.no + ");")
+                .append(p.name_eng, br1, p.name_kor, br2, p.desc, br3)
+            var li = $("<li></li>").append(a);
             $("#placeList").append(li);
         });
         $("placeList").listview("refresh");
@@ -106,6 +114,17 @@ function getPlaceData(page) {
     });
 };
 
+function goPlaceDetailData (no) {
+    var url = "http://195.168.9.206:5255/place100.get.detail?no=" + no;
+    $.getJSON(url, function (json) {
+        $("#detailNoInput").val(json.no);
+        $("#detailEngNameInput").val(json.name_eng);
+        $("#detailKorNameInput").val(json.name_kor);
+        $("#detailDescInput").val(json.desc);
+        $("#detailDateInput").val(json.create_at);
+    })
+}
+
 function regPlaceData() {
     $("#place_input_btn").click(function () {
         let nn = $("#place_name_input").val();
@@ -116,6 +135,11 @@ function regPlaceData() {
         });
         
     });
+    $("#place_desc_input").on("keyup", function(e){
+        if (e.keyCode == 13) {
+            $("#place_input_btn").trigger("click");
+        }
+    });
 }
 
 
@@ -125,6 +149,7 @@ $(function () {
     searchKeyword();
     getPlaceData(1);
     regPlaceData();
+    goPlaceDetailData();
 });
 
 

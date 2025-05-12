@@ -8,9 +8,27 @@ class MachineDAO:
         self.machinePerPage = 10
         self.setAllMachineCount()
 
+    def delete(self, no):
+        try:
+            con, cur = KwonDBManager.makeConCur("kwon/1@195.168.9.61:1521/xe")
+
+            sql = "delete from may07_deepracer_machine "
+            sql += "where dm_no=%s" % no
+
+            cur.execute(sql)
+            if cur.rowcount == 1:
+                self.allMachineCount -= 1
+                con.commit()
+                return {"result": "머신 삭제 완료"}
+            return {"result": "삭제 실패"}
+        except:
+            return {"result": "삭제 실패"}
+        finally:
+            KwonDBManager.closeConCur(con, cur)
+
     def setAllMachineCount(self):
         try:
-            con, cur = KwonDBManager.makeConCur("kwon/1@195.168.9.201:1521/xe")
+            con, cur = KwonDBManager.makeConCur("kwon/1@195.168.9.61:1521/xe")
 
             sql = "select count(*) from may07_deepracer_machine "
 
@@ -34,7 +52,7 @@ class MachineDAO:
             start = (page - 1) * self.machinePerPage + 1
             end = page * self.machinePerPage
 
-            con, cur = KwonDBManager.makeConCur("kwon/1@195.168.9.201:1521/xe")
+            con, cur = KwonDBManager.makeConCur("kwon/1@195.168.9.61:1521/xe")
 
             sql = "SELECT * "
             sql += "FROM ( "
@@ -67,7 +85,7 @@ class MachineDAO:
 
     def getDetail(self, no):
         try:
-            con, cur = KwonDBManager.makeConCur("kwon/1@195.168.9.201:1521/xe")
+            con, cur = KwonDBManager.makeConCur("kwon/1@195.168.9.61:1521/xe")
 
             sql = "SELECT * "
             sql += "FROM may07_deepracer_machine "
@@ -89,7 +107,7 @@ class MachineDAO:
 
     def getSearchMachineCount(self, searchTxt):
         try:
-            con, cur = KwonDBManager.makeConCur("kwon/1@195.168.9.201:1521/xe")
+            con, cur = KwonDBManager.makeConCur("kwon/1@195.168.9.61:1521/xe")
 
             searchTxt = "%" + searchTxt + "%"
 
@@ -108,7 +126,7 @@ class MachineDAO:
 
     def reg(self, color, status):
         try:
-            con, cur = KwonDBManager.makeConCur("kwon/1@195.168.9.201:1521/xe")
+            con, cur = KwonDBManager.makeConCur("kwon/1@195.168.9.61:1521/xe")
 
             sql = "insert into may07_deepracer_machine values( "
             sql += "may07_deepracer_machine_seq.nextval, "
@@ -122,5 +140,26 @@ class MachineDAO:
             return {"result": "등록 실패"}
         except:
             return {"result": "등록 실패"}
+        finally:
+            KwonDBManager.closeConCur(con, cur)
+
+    def update(self, no, color, status):
+        try:
+            con, cur = KwonDBManager.makeConCur("kwon/1@195.168.9.61:1521/xe")
+
+            sql = "update may07_deepracer_machine "
+            sql += "set dm_color='%s', dm_status='%s', dm_check_date=sysdate " % (
+                color,
+                status,
+            )
+            sql += "where dm_no=%s " % no
+
+            cur.execute(sql)
+            if cur.rowcount == 1:
+                con.commit()
+                return {"result": "머신 수정 완료"}
+            return {"result": "수정 실패"}
+        except:
+            return {"result": "수정 실패"}
         finally:
             KwonDBManager.closeConCur(con, cur)

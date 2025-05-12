@@ -8,11 +8,11 @@ function connectCoverpageGoEvent() {
 }
 
 function connectMachineRegEvent() {
-    $("button").click(function () {
+    $("#regBtn").click(function () {
         var c = $("#colorInput").val();
         var s = $("#statusInput").val();
 
-        var url = "http://195.168.9.201:5698/machine.reg?color=" + c + "&status=" + s;
+        var url = "http://195.168.9.61:5698/machine.reg?color=" + c + "&status=" + s;
         $.getJSON(url, function (json) {
             alert(json.result);
             getMachineData(1);
@@ -31,7 +31,7 @@ function connectMachineSearchEvent() {
 }
 
 function connectMainpageGoEvent() {
-    $("#goMainPageA").click(function () {
+    $(".goMainPageA").click(function () {
         mainPage = true;
         page = 1;
         getMachineData();
@@ -53,7 +53,7 @@ function connectScrollEvent() {
 
 function getMachineData() {
     var searchTxt = $("#searchInput").val();
-    var url = "http://195.168.9.201:5698/machine.get?page=" + page + "&search=" + searchTxt;
+    var url = "http://195.168.9.61:5698/machine.get?page=" + page + "&search=" + searchTxt;
     $.getJSON(url, function (json) {
         if (page == 1) {
             $("ul").empty();
@@ -72,13 +72,48 @@ function getMachineData() {
 }
 
 function goDetailPage(no) {
-    alert(no);
+    var url = "http://195.168.9.61:5698/machine.get.detail?no=" + no;
+    $.getJSON(url, function (json) {
+        $("#detailNoInput").val(json.no);
+        $("#detailColorInput").val(json.color);
+        $("#detailStatusInput").val(json.status);
+        $("#detailDateInput").val(json.checkDate);
+    });
+}
+
+function connectMachineDelEvent() {
+    $("#detailDelBtn").click(function () {
+        var no = $("#detailNoInput").val();
+        var url = "http://195.168.9.61:5698/machine.del?no=" + no;
+        $.getJSON(url, function (json) {
+            alert(json.result);
+            page = 1;
+            getMachineData();
+            $.mobile.changePage("#mainPage");
+        });
+    });
+}
+
+function connectMachineUpdateEvent() {
+    $("#detailUpdateBtn").click(function () {
+        var no = $("#detailNoInput").val();
+        var color = $("#detailColorInput").val();
+        var status = $("#detailStatusInput").val();
+        var url = "http://195.168.9.61:5698/machine.update?no=" + no + 
+                "&color=" + color + "&status=" + status;
+        $.getJSON(url, function(json){
+            alert(json.result);
+            goDetailPage(no);
+        });
+    });
 }
 
 $(function () {
     connectCoverpageGoEvent();
+    connectMachineDelEvent();
     connectMachineRegEvent();
     connectMachineSearchEvent();
+    connectMachineUpdateEvent();
     connectMainpageGoEvent();
     connectScrollEvent();
 });

@@ -43,7 +43,7 @@
             <h1>고은비 망해라</h1>
         </div>
         <div data-role="content" id="coverPageContentArea">
-            <a id="goMainPageA" href="#mainPage" data-transition="flow">
+            <a class="goMainPageA" href="#mainPage" data-transition="flow">
                 <img src="bg.jpg">
             </a>
         </div>
@@ -57,7 +57,7 @@
         <div data-role="content">
             <input placeholder="색깔" id="colorInput" autocomplete="off">
             <input placeholder="상태" id="statusInput" autocomplete="off">
-            <button>등록</button>
+            <button id="regBtn">등록</button>
             <hr>
             <input placeholder="검색" id="searchInput" autocomplete="off">  
             <ul data-role="listview" data-inset="true" data-theme="c"></ul>
@@ -66,11 +66,20 @@
 
     <div data-role="page" id="detailPage" data-theme="b">
         <div data-role="header">
-            <a href="#mainPage" data-transition="turn" data-icon="arrow-l">뒤로</a>
+            <a class="goMainPageA" href="#mainPage" data-transition="turn" data-icon="arrow-l">뒤로</a>
             <h1>고은비 망해라</h1>
         </div>
         <div data-role="content">
-            상세
+            번호
+            <input id="detailNoInput" readonly>
+            색깔
+            <input id="detailColorInput">
+            내용
+            <input id="detailStatusInput">
+            날짜
+            <input id="detailDateInput" readonly>
+            <button id="detailUpdateBtn">수정</button>
+            <button id="detailDelBtn">삭제</button>
         </div>
     </div>
 </body>

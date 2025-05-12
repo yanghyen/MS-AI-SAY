@@ -6,6 +6,11 @@ from machine.machineDAO import MachineDAO
 app = FastAPI()
 mDAO = MachineDAO()
 
+@app.get("/machine.del")
+def machineDel(no):
+    result = mDAO.delete(no)
+    h = {"Access-Control-Allow-Origin": "*"}
+    return JSONResponse(result, headers=h)
 
 @app.get("/machine.get")
 def machineGet(page, search):
@@ -24,5 +29,11 @@ def machineGetDetail(no):
 @app.get("/machine.reg")
 def machineReg(color, status):
     result = mDAO.reg(color, status)
+    h = {"Access-Control-Allow-Origin": "*"}
+    return JSONResponse(result, headers=h)
+
+@app.get("/machine.update")
+def machineUpdate(no, color, status):
+    result = mDAO.update(no, color, status)
     h = {"Access-Control-Allow-Origin": "*"}
     return JSONResponse(result, headers=h)
