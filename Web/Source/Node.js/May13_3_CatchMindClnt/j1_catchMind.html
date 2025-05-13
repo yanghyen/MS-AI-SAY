@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chatting</title>
+    <script src="http://195.168.9.206:52556/socket.io/socket.io.js"></script>
+    <script src="jQuery.js"></script>
+    <style>
+        canvas {
+            background-color: green;
+        }
+    </style>
+    <script>
+        $(function () {
+            var socket = io.connect("http://195.168.9.206:52556");
+
+            var paper = document.getElementById("c");
+            var pen = paper.getContext("2d");
+            pen.save();
+
+            var isDrawing = false;
+            var lastX = 0;
+            var lastY = 0;
+
+            pen.strokeStyle = "white";
+            pen.lineWidth = 5;
+            pen.lineCap = "round"; // 선 끝을 둥글게 만들기
+
+            $("canvas").mousedown(function(e){
+                isDrawing = true;
+                lastX = e.offsetX;
+                lastY = e.offsetY;
+                socket.emit("clntMsg", {"isDrawing":isDrawing, "x":lastX, "y":lastY})
+            });
+            
+            socket.on("srvMsg", function(msg){
+                $("canvas").mousemove(function(e){
+                    if (!msg.isDrawing) return;
+    
+                    var currentX = e.offsetX;
+                    var currentY = e.offsetY;
+    
+                    pen.beginPath();
+                    pen.moveTo(msg.x, msg.y);
+                    pen.lineTo(currentX, currentY);
+                    pen.stroke();
+                    pen.closePath();
+    
+                    msg.x = currentX;
+                    msg.y = currentY;
+                });            
+            });
+            $("canvas").mouseup(function(){
+                isDrawing = false;
+                socket.emit('clnMsg', {"isDrawing":false});
+            });
+            
+            $("canvas").mouseleave(function(){
+                isDrawing = false;
+                socket.emit('clnMsg', {"isDrawing":false});
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <canvas id="c" width="800px" height="600px"></canvas>
+</body>
+
+</html>

@@ -38,13 +38,13 @@
     - npm install express-generator@4 -g
 ### 프로젝트 생성
 1. 프로젝트 만들 곳 가서 cmd
-2. express 프로젝트명
-3. 프로젝트 폴더로 들어가서 cd 프로젝트명
+2. ```express 프로젝트명```
+3. 프로젝트 폴더로 들어가서 ```cd 프로젝트명```
 4. 기본적으로 필요한 라이브러리 설치
-    - npm install
-5. VScode에서 app.js 편집
-### 실행(nodemon)
-- nodemon app.js
+    - ```npm install```
+5. 실행(nodemon)
+- ```nodemon app.js```
+6. VScode에서 app.js 편집
 ### 참고
 - app.js
     - ```app.listen(5643); // Node.js Express WAS 포트 번호```
@@ -56,3 +56,7 @@
     - ```js
         var db = mjs("195.168.9.126/yanghyenTS", ["may12_snack"]);
         var n = rq.query.name;
+- 웹소켓서버 구현에 최적화
+    1. js파일제공 -> 웹 환경에서 사용 편리
+    2. 문법 간단
+    3. 컴은 한번에 한 작업만 가능 -> 멀티쓰레드 관련 구현 필요

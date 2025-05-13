@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chatting</title>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+    <script src="http://195.168.9.206:56567/socket.io/socket.io.js"></script>
+    <script src="jQuery.js"></script>
+    <style>
+        table{
+            width: 90%;
+        }
+
+        .td45 {
+            width: 45%;
+        }
+
+        .td10 {
+            width: 10%;
+        }
+
+        .friendMsg {
+            background-color: seagreen;
+            color: beige;
+            padding: 10px;
+        }
+
+        .myMsg {
+            background-color: beige;
+            color: seagreen;
+            padding: 10px;
+            border: seagreen solid;
+        }
+    </style>
+
+    <script>
+        $(function () {
+            var who = "";
+            var socket = io.connect("http://195.168.9.206:56567");
+            
+            socket.on("srvMsg", function (msg) {
+                var br = $("<br>");
+                var td1 = $("<td></td>").attr("class", "td45");
+                var td2 = $("<td></td>").attr("class", "td10");
+                var td3 = $("<td></td>").attr("class", "td45");
+                if ($("#nicknameInput").val() == msg.who){
+                    $(td3).append(msg.who, br, msg.txt);
+                    $(td3).attr("class", "myMsg");
+                } else {
+                    $(td1).append(msg.who, br, msg.txt);
+                    $(td1).attr("class", "friendMsg");
+                }
+                var tr = $("<tr></tr>").append(td1, td2, td3);
+                $("table").append(tr);
+
+                $(window).scrollTop($(document).height());
+            });
+
+            $("#loginBtn").click(function(e){
+                who = $("#nicknameInput").val();
+                $("#chatName").val(who);
+            });
+
+            $("#chatInput").keyup(function (e) {
+                if (e.keyCode == 13) {
+                    var msg = $(this).val();
+                    socket.emit("clntMsg", {"who":who, "txt":msg});
+                    $(this).val("");
+                }
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <div data-role="page" id="loginPage">
+        <div data-role="header" data-theme="b" data-position="fixed">
+            <h1>Chatting Login</h1>
+        </div>
+        <div data-role="content">
+            <input id="nicknameInput" placeholder="이름">
+            <a href="#mainPage" id="loginBtn" data-role="button">시작</a>
+        </div>
+    </div>
+
+    <div data-role="page" id="mainPage">
+        <div data-role="header" data-theme="b" data-position="fixed">
+            <a href="#loginPage" data-icon="arrow-l">back</a>
+            <h1>Chatting</h1>
+        </div>
+        <div data-role="content">
+            <img src="img/bara.jfif">
+            <input id="chatName" readonly>
+            <a href="#chattingPage" id="chatStartBtn" data-role="button">입장</a>
+        </div>
+    </div>
+
+    <div data-role="page" id="chattingPage">
+        <div data-role="header" data-theme="b" data-position="fixed">
+            <a href="#mainPage" data-icon="arrow-l">back</a>
+            <h1>Chatting</h1>
+        </div>
+        <div data-role="content">
+            <div id="chattingArea">
+                <ul data-role="listview" data-inset="true" id="chatList"></ul>
+                <table></table>
+            </div>
+        </div>
+        <div data-role="footer" data-theme="b" data-position="fixed">
+            <div>
+                <input id="chatInput" style="flex: 1;" placeholder="메시지를 입력하세요">
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
