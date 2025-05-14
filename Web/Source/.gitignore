@@ -1,5 +1,6 @@
 # 모든 하위 프로젝트의 node_modules 무시
 **/node_modules/
+node_modules/
 
 # 모든 하위 .env 파일 무시
 **/.env
@@ -9,3 +10,5 @@
 Thumbs.db
 *.log
 .vscode/
+dist/
+build/

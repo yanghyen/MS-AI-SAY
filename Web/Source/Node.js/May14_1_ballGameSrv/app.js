@@ -20,12 +20,19 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 var io = require("socket.io")();
-io.listen(52556);
+io.listen(56567);
 
-io.sockets.on("connection", function(socket){
-  socket.on("clntMsg", function(msg){
-    io.sockets.emit("srvMsg", msg);
-    console.log("캐치마인드 입쟝");
+io.sockets.on("connection", function(socket){  
+  socket.on("hostX", function(hx){
+    io.sockets.emit("hostX", hx);
+  });
+
+  socket.on("guestX", function(gx){
+    io.sockets.emit("guestX", gx);
+  });
+
+  socket.on("ballPos", function(bp){
+    io.sockets.emit("ballPos", bp);
   });
 });
 

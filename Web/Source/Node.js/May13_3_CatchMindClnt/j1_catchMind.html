@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Chatting</title>
+    <title>CatchMind</title>
     <script src="http://195.168.9.206:52556/socket.io/socket.io.js"></script>
     <script src="jQuery.js"></script>
     <style>
@@ -13,52 +13,72 @@
     </style>
     <script>
         $(function () {
-            var socket = io.connect("http://195.168.9.206:52556");
+            const socket = io.connect("http://195.168.9.206:52556");
 
-            var paper = document.getElementById("c");
-            var pen = paper.getContext("2d");
-            pen.save();
+            const paper = document.getElementById("c");
+            const pen = paper.getContext("2d");
 
-            var isDrawing = false;
-            var lastX = 0;
-            var lastY = 0;
+            let isDrawing = false;
+            let lastX = 0;
+            let lastY = 0;
 
             pen.strokeStyle = "white";
             pen.lineWidth = 5;
-            pen.lineCap = "round"; // 선 끝을 둥글게 만들기
+            pen.lineCap = "round";
 
-            $("canvas").mousedown(function(e){
+            // 1. 마우스 누름
+            $("canvas").mousedown(function (e) {
                 isDrawing = true;
                 lastX = e.offsetX;
                 lastY = e.offsetY;
-                socket.emit("clntMsg", {"isDrawing":isDrawing, "x":lastX, "y":lastY})
             });
-            
-            socket.on("srvMsg", function(msg){
-                $("canvas").mousemove(function(e){
-                    if (!msg.isDrawing) return;
-    
-                    var currentX = e.offsetX;
-                    var currentY = e.offsetY;
-    
-                    pen.beginPath();
-                    pen.moveTo(msg.x, msg.y);
-                    pen.lineTo(currentX, currentY);
-                    pen.stroke();
-                    pen.closePath();
-    
-                    msg.x = currentX;
-                    msg.y = currentY;
-                });            
+
+            // 2. 마우스 이동
+            $("canvas").mousemove(function (e) {
+                if (!isDrawing) return;
+
+                const currentX = e.offsetX;
+                const currentY = e.offsetY;
+
+                // 2-1. 본인 그리기
+                pen.beginPath();
+                pen.moveTo(lastX, lastY);
+                pen.lineTo(currentX, currentY);
+                pen.stroke();
+                pen.closePath();
+
+                // 2-2. 서버로 전송
+                socket.emit("clntMsg", {
+                    isDrawing: true,
+                    fromX: lastX,
+                    fromY: lastY,
+                    x: currentX,
+                    y: currentY
+                });
+
+                lastX = currentX;
+                lastY = currentY;
             });
-            $("canvas").mouseup(function(){
+
+            // 3. 마우스 떼거나 캔버스 벗어남
+            $("canvas").mouseup(function () {
                 isDrawing = false;
-                socket.emit('clnMsg', {"isDrawing":false});
+                socket.emit("clntMsg", { isDrawing: false });
             });
-            
-            $("canvas").mouseleave(function(){
+            $("canvas").mouseleave(function () {
                 isDrawing = false;
-                socket.emit('clnMsg', {"isDrawing":false});
+                socket.emit("clntMsg", { isDrawing: false });
+            });
+
+            // 4. 다른 사람 그림 그리기
+            socket.on("srvMsg", function (msg) {
+                if (!msg.isDrawing) return;
+
+                pen.beginPath();
+                pen.moveTo(msg.fromX, msg.fromY);
+                pen.lineTo(msg.x, msg.y);
+                pen.stroke();
+                pen.closePath();
             });
         });
     </script>

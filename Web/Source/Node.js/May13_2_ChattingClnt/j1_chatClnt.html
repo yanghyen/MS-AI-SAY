@@ -68,7 +68,7 @@
                 if (e.keyCode == 13) {
                     var msg = $(this).val();
                     socket.emit("clntMsg", {"who":who, "txt":msg});
-                    $(this).val("");
+                    $(this).val("");    // 입력창 초기화 
                 }
             });
 

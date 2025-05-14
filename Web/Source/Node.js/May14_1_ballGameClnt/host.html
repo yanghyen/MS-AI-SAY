@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 
+컨셉 : 나 밑, 상대방 위로 볼 안 닿게 하는 게임
+host가 canvas 클릭하면 게임 시작 -> 이건 소통 작업 끝내고 하자
+socket으로 통신할 값은 barX 좌표 : 서로 보일 때는 barX는 동일, barY는 반대임
+    - host : x, isStart
+    - guest : x
+
+- 위쪽에 바 생성, 내 바는 초록, 상대 바는 브라운
+- 클릭하면 host 주고, 나머지한테 guest
+- 내 마우스 x좌표 따르는 건 아래에 있는 bar만 해당
+
+- 아 host.html, guest.html 구분해서 barX 주고 받으면 된다 ^^;
+- myBarX : 내가 움직이는 e.pageX
+- yourBarX : socket으로 제공받는 barX
+- yourBarX가 표시되는 건 server랑 socket 통신하는 곳에 하면 됨
+- 근데 app.js에서 hostX를 받는 곳에서 guestX를 보내려면 어떻게 해야 되지?
+    - hostX를 받은 콜백함수 파라미터에는 hostX값만 있잖아
+
+- > host가 canvas 클릭하면 게임 시작 -> 이건 소통 작업 끝내고 하자
+- > ball shadow 없어진 거 추가
+
+- 문제점 : host기준 guest bar에 닿아도 게임 종료됨, guest는 ball 멈추는 로직 적용 안돼서 안 멈춤
+
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ball Game</title>
+    <script src="http://195.168.9.206:56567/socket.io/socket.io.js"></script>
+    <script src="jQuery.js"></script>
+    <script>
+        $(function () {
+            const socket = io.connect("http://195.168.9.206:56567");
+            var paper = document.getElementById("c");
+            var pen = paper.getContext("2d");
+
+            var ball = new Image();
+            var ballX = 185; var ballY = 285;
+            var xSpd = 3; var ySpd = 3;
+            var barX = 150;
+            let guestBarX = 150;
+            ball.src = "ball.png";
+            ball.onload = function () {
+                var t = setInterval(function () {
+                    pen.save();
+                    pen.fillStyle = "#000000"; pen.fillRect(0, 0, 400, 600);
+
+                    pen.shadowOffsetX = 0; pen.shadowOffsetY = 0;
+                    pen.shadowBlur = 10; pen.shadowColor = "red";
+
+                    if (ballX >= 370 || ballX <= 0) {
+                        xSpd *= -1;
+                    }
+                    if (ballY <= 0) {
+                        ySpd *= -1;
+                    }
+                    if (ballY >= 555 &&
+                        ballX >= barX - 15 &&
+                        ballX <= barX + 85) {
+                        ySpd *= -1;
+                    }
+                    if (ballY <= 20 &&
+                        ballX >= barX - 15 &&
+                        ballX <= barX + 85) {
+                            ySpd *= -1;
+                    }
+                    if (ballY >= 570 || ballY <= 0) {
+                        clearInterval(t);
+                    }
+
+                    ballX += xSpd; ballY += ySpd;
+                    pen.drawImage(ball, ballX, ballY);
+
+                    pen.save();
+                    pen.shadowColor = "white";
+                    pen.fillStyle = "green"; pen.fillRect(barX, 585, 100, 15);
+                    pen.restore();
+
+                    pen.save();
+                    pen.shadowColor = "white";
+                    pen.fillStyle = "#634e3a"; pen.fillRect(guestBarX, 10, 100, 15);
+                    pen.restore();
+
+                    socket.emit("hostX", barX);
+                    socket.emit("ballPos", {"x":ballX, "y":ballY});
+
+                }, 30);
+            };
+            $("canvas").mousemove(function (e) {
+                barX = e.pageX - 58;
+            });
+            
+            socket.on("guestX", function(gx){
+                guestBarX = gx;
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+    <canvas id="c" width="400px" height="600px"></canvas>
+    <h1>host</h1>
+</body>
+
+</html>

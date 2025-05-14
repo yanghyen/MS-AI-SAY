@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+    <meta charset="utf-8">
+    <title>ㅋ</title>
+    <script src="jQuery.js"></script>
+    <script src="http://195.168.9.206:52556/socket.io/socket.io.js"></script>
+    <script>
+        $(function () {
+            var socket = io.connect("http://195.168.9.206:52556");
+ 
+            var paper = document.getElementById("c");
+            var pen = paper.getContext("2d");
+            var drawMode = false;
+            var beginX; var beginY;
+            var endX; var endY;
+            var color = "#000000";
+ 
+            $("#colorInput").keyup(function () {
+                color = $(this).val();
+            });
+            socket.on("drawInfo2", function (di) {
+                pen.strokeStyle = di.color;
+                pen.beginPath();
+                pen.moveTo(di.bx, di.by);
+                pen.lineTo(di.ex, di.ey);
+                pen.closePath();
+                pen.stroke();
+            });
+            $("canvas").mousedown(function (e) {
+                drawMode = true;
+                beginX = e.pageX - 8;
+                beginY = e.pageY - 8;
+            });
+            $("canvas").mousemove(function (e) {
+                if (drawMode) {
+                    endX = e.pageX - 8;
+                    endY = e.pageY - 8;
+                    var di = {
+                        "color": color,
+                        "bx": beginX, "by": beginY,
+                        "ex": endX, "ey": endY
+                    };
+                    socket.emit("drawInfo", di);
+                    beginX = endX;
+                    beginY = endY;
+                }
+            });
+            $("canvas").mouseup(function (e) {
+                drawMode = false;
+            });
+        });
+    </script>
+</head>
+ 
+<body>
+    <canvas id="c" width="800px" height="600px"></canvas>
+    <br>
+    <input id="colorInput" value="#000000">
+</body>
+ 
+</html>
+ 
