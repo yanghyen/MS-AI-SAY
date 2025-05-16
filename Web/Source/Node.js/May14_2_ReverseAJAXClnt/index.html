@@ -16,18 +16,43 @@ OracleDB, Node.js, express, socket.io@2, jQuery Mobile
     <script src="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
     <script src="http://195.168.9.206:52555/socket.io/socket.io.js"></script>
     <script src="jQuery.js"></script>
-    <script src="may14_jQuery.js"></script>
-    
+
     <script>
+        
+        function getSnackData() {
+            var url = "http://195.168.9.206:3344/snack.get";
+            $.getJSON(url, function (jsonn) {
+                $.each(jsonn.snacks, function (i, s) {
+                    var br1 = $("<br>");
+                    var br2 = $("<br>");
+                    var a = $("<a></a>").append(s.name, br1, s.price, br2);
+                    var li = $("<li></li>").append(a);
+                    $("ul").append(li);
+                });
+                $("ul").listview("refresh");
+            });
+        }
         $(function () {
-            var who = "";
             var socket = io.connect("http://195.168.9.206:52555");
+            getSnackData();
             
-            socket.on("srvMsg", function (msg) {
-                
+            $("#snackBtn").click(function () {
+                var n = $("#snackNameInput").val();
+                var p = $("#snackPriceInput").val();
+    
+                var url = "http://195.168.9.206:3344/snack.reg?name=" + n + "&price=" + p;
+                $.getJSON(url, function (jsonn) {
+                    if (jsonn.result == "성공"){
+                        socket.emit("clntMsg", jsonn);
+                    }
+                });
+                $("#snackNameInput").val("");
+                $("#snackPriceInput").val("");
             });
 
-            
+            socket.on("srvMsg", function(){
+                getSnackData();
+            });
 
         });
     </script>
@@ -39,8 +64,9 @@ OracleDB, Node.js, express, socket.io@2, jQuery Mobile
             <h1>ReverseAJAX</h1>
         </div>
         <div data-role="content">
-            <input id="snackNameInput">
-            <button id="snackNameBtn">등록</button>
+            <input id="snackNameInput" placeholder="이름">
+            <input id="snackPriceInput" placeholder="가격">
+            <button id="snackBtn">등록</button>
             <ul data-role="listview" data-inset="true" data-filter></ul>
         </div>
     </div>

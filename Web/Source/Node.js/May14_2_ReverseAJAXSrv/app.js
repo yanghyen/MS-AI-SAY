@@ -23,6 +23,7 @@ var io = require("socket.io")();
 io.listen(52555);
 
 io.sockets.on("connection", function(socket){
+  console.log("접속");
   socket.on("clntMsg", function(msg){
     io.sockets.emit("srvMsg", msg);
   });
