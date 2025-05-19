@@ -1,0 +1,22 @@
+#tempSnackTbl th{
+    background-color: pink;
+}
+
+#tempSnackTbl td{
+    background-color: beige;
+}
+
+#tempSnackTbl {
+    width: 400px;
+}
+
+#regBtn {
+    margin-left: 40px;
+    width: 200px;
+    background-color: pink;
+    border: solid hotpink;
+}
+
+.inputTxt {
+    border: solid pink;
+}

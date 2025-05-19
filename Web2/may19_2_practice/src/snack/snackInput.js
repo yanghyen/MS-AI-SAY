@@ -1,32 +1,56 @@
 import React, { useState } from "react";
+import "./snack.css";
 
+// class
 const SnackBBS = () => {
+    // memberVar
+    const [snacks, setSnacks] = useState([]);
+    const snacksTr = snacks.map((snack, i) => {
+        return (
+            <tr className="dataTr" onClick={() => {
+                del(snack.name);
+            }}>
+                <td align="center">{snack.name}</td>
+                <td align="right">{snack.price}원</td>
+            </tr>
+        );
+    });
     const [tempSnack, setTempSnack] = useState({ name: "", price: "" });
-    const changeTempSnackName = (e) => { 
-      setTempSnack({...tempSnack, name:e.target.value});
-     }
+
+    // method
+    const changeTempSnackName = (e) => {
+        setTempSnack({ ...tempSnack, name: e.target.value });
+    };
+
+    const changeTempSnackPrice = (e) => {
+        setTempSnack({ ...tempSnack, price: e.target.value });
+    };
 
     const reg = () => {
-       alert(JSON.stringify(tempSnack));
-       setTempSnack({name:"", price:""});
+        setSnacks(snacks.concat(tempSnack));
+        setTempSnack({ name: "", price: "" });
+    };
+
+    const del = (name) => {
+        // 칙촉을 지운다
+        // 이름이 칙촉이 아닌 애들만 남긴다
+        setSnacks(snacks.filter((snack) => snack.name !== name))
     };
 
     return (
         <div id="snackArea">
             이름{" "}
             <input
-                id="nameInput"
+                class="inputTxt"
                 value={tempSnack.name}
                 onChange={changeTempSnackName}
             />
             <br />
             가격{" "}
             <input
-                id="priceInput"
+                class="inputTxt"
                 value={tempSnack.price}
-                onChange={(e) => {
-                  setTempSnack({...tempSnack, price:e.target.value});
-                }}
+                onChange={changeTempSnackPrice}
             />
             <br />
             <br />
@@ -39,6 +63,7 @@ const SnackBBS = () => {
                     <th>이름</th>
                     <th>가격</th>
                 </tr>
+                {snacksTr}
             </table>
         </div>
     );

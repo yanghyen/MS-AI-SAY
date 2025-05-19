@@ -45,3 +45,8 @@ const sortedSnacks = snack.sort((s1, s2) => {
 - 배열 추가
     - 배열[i] = ???
     - 배열.concat(???) : 추가된 배열을 리턴
+- 배열 vs list
+    - Python : list
+    - JS : 배열
+    - 배열은 append와 다르게 수정 불가
+    - concat : 배열을 새로 만들어서 리턴
