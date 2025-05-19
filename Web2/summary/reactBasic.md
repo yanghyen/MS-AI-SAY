@@ -113,3 +113,18 @@ export default MyH1;
 - CSS
     - JS객체 형태로 씀
     - 속성명이 낙타체
+### package.json
+- cmd 명령어
+- 포트 바꾸고 싶으면
+    ```
+    "scripts": {
+    "start": "set PORT=9999 && react-scripts start",
+    ```
+### 객체 값 그대로 가져오기
+- ...객체 : 그 객체 값들 그대로 가져오기(ES6)
+
+### 테이블 추가
+- jQuery
+    - ```$("<td></td>").attr("align", "center").text("aa");```
+- React
+    - ```<td align="center">aa</td>```
