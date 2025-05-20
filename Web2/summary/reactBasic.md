@@ -128,3 +128,17 @@ export default MyH1;
     - ```$("<td></td>").attr("align", "center").text("aa");```
 - React
     - ```<td align="center">aa</td>```
+
+### this
+- e.target : 이벤트가 발생한 객체
+- e.target.value : input의 내용
+- e.target.name : input의 이름
+    - changeName, changeHeight 따로 안 만들고 한번에 가능
+    ```js
+    setInfo({...info, [e.target.name]: e.target.value});
+    ```
+
+### 외부 파일 불러오기
+1. public/index.html에 ```<script src="http://localhost:8787/socket.io/socket.io.js"></script>``` 추가
+2. window.???로 사용 
+    - ```window.io.connect("http://localhost:8787");```

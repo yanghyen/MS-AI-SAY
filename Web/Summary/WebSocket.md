@@ -15,6 +15,8 @@
 var io = require("socket.io")();
 io.listen(9999);  // socket 통신 포트 번호
 ```
+- 웹소켓서비스 시작 -> 이걸 자동으로 만들어줌
+    - http://주소:포트/socket.io/socket.io.js 로 확인
 ### 문법
 - 객체(주어)
     - io.socekts : 연결된 모든 소켓들 
