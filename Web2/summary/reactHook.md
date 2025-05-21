@@ -121,4 +121,9 @@ useEffect(() => {
 ```
 
 ### React에서 canvas
-- useRef : jQuery같은 선택
+- useRef : jQuery같은 선택  
+    - Web2/Source/may20_1/src/hook/myHookFourth.js 참고
+
+### React 권장사항
+- useState 초기값으로 세팅해도 되지만, useEffect 사용 권장
+    - 시간이 오래 걸려서

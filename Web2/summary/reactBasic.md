@@ -142,3 +142,9 @@ export default MyH1;
 1. public/index.html에 ```<script src="http://localhost:8787/socket.io/socket.io.js"></script>``` 추가
 2. window.???로 사용 
     - ```window.io.connect("http://localhost:8787");```
+
+### 참고 사항
+- React는 화면 전환 잦은 사이트 개발에 유리 + JS + VDOM => 비동기식 추구
+    - state 변경한 게 바로 반영 안되고, 수정 후 다음 렌더링에 반영됨
+- ``으로 입력하면 한번에 출력 가능
+    - ```const msg = `키 : ${h}cm, 몸무게 : ${w}kg`;```

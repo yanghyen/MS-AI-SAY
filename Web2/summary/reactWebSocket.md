@@ -19,3 +19,6 @@
         io("http://localhost:8787");
     }, []);
     ```
+### 문법
+- io.connect("url") -> io("url")
+- 
