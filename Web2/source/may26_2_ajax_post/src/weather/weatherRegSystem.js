@@ -4,7 +4,12 @@ import React, { useRef, useState } from "react";
 const WeatherRegSystem = () => {
     const iconInput = useRef();
     const [weather, setWeather] = useState({ desc: "", temp: "", icon: "" });
-    const [result, setResult] = useState({ result: "", desc: "", temp: "", icon: "" });
+    const [result, setResult] = useState({
+        result: "",
+        desc: "",
+        temp: "",
+        icon: "",
+    });
     const weatherFD = new FormData();
 
     const changeWeather = (e) => {
@@ -39,7 +44,13 @@ const WeatherRegSystem = () => {
             기온 :{" "}
             <input value={weather.temp} name="temp" onChange={changeWeather} />
             <p />
-            이미지 : <input ref={iconInput} type="file" name="icon" onChange={changeWeather} />
+            이미지 :{" "}
+            <input
+                ref={iconInput}
+                type="file"
+                name="icon"
+                onChange={changeWeather}
+            />
             <p />
             <button onClick={regResult}>등록</button>
             <hr />
@@ -47,7 +58,15 @@ const WeatherRegSystem = () => {
             <h2>등록한 날씨 : {result.desc}</h2>
             <h2>등록한 기온 : {result.temp}</h2>
             <h2>등록한 파일명 : {result.icon}</h2>
-            <img src={`http://195.168.9.206:1010/weather.icon.get?icon=${result.icon}`} alt="" />
+            <img
+                src={`http://195.168.9.206:1010/weather.icon.get?icon=${result.icon}`}
+                alt=""
+            />
+            <a
+                href={`http://localhost:8888/weather.icon.get?icon=${regResult.icon}`}
+            >
+                다운받기{" "}
+            </a>
         </>
     );
 };
