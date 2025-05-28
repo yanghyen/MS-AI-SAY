@@ -1,3 +1,4 @@
+from ast import Or
 from logging import Logger
 from typing import final
 
@@ -11,6 +12,50 @@ from hyenLib.oracleDBManager import OracleDBManager
 class ProductDAO:
     def __init__(self):
         self.folder = './product/img/'
+
+    def dele(self, name):
+        try:
+            con, cur = OracleDBManager.makeConCur("yanghyen/0317@195.168.9.126:1521/xe")
+            sql = "delete from may27_product "
+            sql += "where p_name = '%s'" %(name)
+            cur.execute(sql)
+            if cur.rowcount >= 1:
+                con.commit()
+            return {"result":"삭제성공"}
+        except Exception as e:
+            print(e)
+            return {"result":"삭제실패"}
+        finally:
+            OracleDBManager.closeConCur(con, cur)
+            
+
+    def get(self):
+        try:
+            con, cur = OracleDBManager.makeConCur("yanghyen/0317@195.168.9.126:1521/xe")
+            sql = "select * from may27_product order by p_name"
+            cur.execute(sql)
+            products = []
+            for row in cur:
+                p = {
+                    "name" : row[0],
+                    "price" : row[1],
+                    "desc" : row[2],
+                    "image" : row[3]
+                }
+                products.append(p)
+                result = {
+                    "result" : "조회성공",
+                    "products" : products
+                }
+            return result
+        except Exception as e:
+            print(e)
+            return {"result" : "조회실패"}
+        finally:
+            OracleDBManager.closeConCur(con, cur)
+
+    def getImg(self, image):
+        return FileResponse(self.folder + image, filename=image)
         
     async def reg(self, name, price, desc, image):
         try:
@@ -44,31 +89,3 @@ class ProductDAO:
             return {"result":"등록 실패2(DB)"}
         finally:
             OracleDBManager.closeConCur(con, cur)
-
-    def get(self):
-        try:
-            con, cur = OracleDBManager.makeConCur("yanghyen/0317@195.168.9.126:1521/xe")
-            sql = "select * from may27_product"
-            cur.execute(sql)
-            products = []
-            for row in cur:
-                p = {
-                    "name" : row[0],
-                    "price" : row[1],
-                    "desc" : row[2],
-                    "image" : row[3]
-                }
-                products.append(p)
-                result = {
-                    "result" : "조회성공",
-                    "products" : products
-                }
-            return result
-        except Exception as e:
-            print(e)
-            return {"result" : "조회실패"}
-        finally:
-            OracleDBManager.closeConCur(con, cur)
-
-    def getImg(self, image):
-        return FileResponse(self.folder + image, filename=image)

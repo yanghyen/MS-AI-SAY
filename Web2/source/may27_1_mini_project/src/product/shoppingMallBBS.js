@@ -1,5 +1,7 @@
 import axios from "axios";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import "./shoppingMallBBS.css";
+
 
 const ShoppingMallBBS = () => {
     const [product, setProduct] = useState({
@@ -11,6 +13,10 @@ const ShoppingMallBBS = () => {
     // result를 배열로 초기화 (상품 목록 저장용)
     const [result, setResult] = useState([]);
     const imageInput = useRef();
+
+    useEffect(() => {
+        getResult(); // 컴포넌트가 마운트될 때 한번 실행
+    }, []);
 
     const changeProduct = (e) => {
         if (e.target.name === "image") {
@@ -39,6 +45,7 @@ const ShoppingMallBBS = () => {
                 alert(res.data.result || "등록 성공");
                 setProduct({ name: "", price: "", desc: "", image: "" });
                 imageInput.current.value = "";
+                getResult();
             })
             .catch((error) => {
                 console.error(
@@ -68,8 +75,29 @@ const ShoppingMallBBS = () => {
             });
     };
 
+    const deleResult = (name) => {
+        if (!window.confirm(`정말 '${name}' 상품을 삭제하시겠습니까?`)) return;
+        axios
+            .post(
+                `http://195.168.9.206:1717/product.dele`,
+                { name },
+                { 
+                    headers: { "Content-Type": "application/json" },
+                    withCredentials: true 
+                }
+            )
+            .then((res) => {
+                alert("삭제!");
+                getResult();
+            })
+            .catch((error) => {
+                console.error("삭제 실패:", error.response || error);
+                alert("상품 삭제 실패");
+            });
+    };
+
     return (
-        <>
+        <div className="shopping-mall-bbs">
             <h1>상품등록</h1>
             이름 :{" "}
             <input value={product.name} name="name" onChange={changeProduct} />
@@ -91,17 +119,17 @@ const ShoppingMallBBS = () => {
                 name="image"
                 onChange={changeProduct}
             />
+            <p />
             <button onClick={regResult}>등록</button>
-            <button onClick={getResult}>조회</button>
             <hr />
             <h2>조회 결과</h2>
             <table border={1}>
                 <thead>
                     <tr>
+                        <th>이미지</th>
                         <th>이름</th>
                         <th>가격</th>
                         <th>설명</th>
-                        <th>이미지</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -114,22 +142,24 @@ const ShoppingMallBBS = () => {
                     ) : (
                         result.map((item, idx) => (
                             <tr key={idx}>
-                                <td>{item.name}</td>
-                                <td>{item.price}</td>
-                                <td>{item.desc}</td>
                                 <td>
                                     <img
                                         src={`http://195.168.9.206:1717/product.get.img?image=${item.image}`}
                                         alt=""
-                                        width={200}
+                                        width={100}
+                                        height={100}
+                                        onClick={() => deleResult(item.name)}
                                     />
                                 </td>
+                                <td>{item.name}</td>
+                                <td>{item.price}</td>
+                                <td>{item.desc}</td>
                             </tr>
                         ))
                     )}
                 </tbody>
             </table>
-        </>
+        </div>
     );
 };
 
