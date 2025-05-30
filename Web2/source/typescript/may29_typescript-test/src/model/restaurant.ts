@@ -27,3 +27,15 @@ export type Menu = {
     price:number;
     category:string;
 }
+
+export type AddressWithoutZip = Omit<Address, 'zipCode'>
+export type RestaurantOnlyCategory = Pick<Restaurant, 'category'>
+
+export type ApiResponse<T> = {
+    data:T[],       // data가 api 호출에 따라 타입이 달라지니까
+    totlaPage:number,
+    page:number
+}
+
+export type RestaurantResponse = ApiResponse<Restaurant>
+export type MenuResponse = ApiResponse<Menu>

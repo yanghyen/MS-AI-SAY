@@ -43,6 +43,35 @@ export type Address = {     // type의 type도 생성 가능
 }
 ```
 2. interface 생성
+```js
+// info:Restaurant라서 info가 Restaurant로 들어옴
+interface OwnProps {
+    info:Restaurant,
+    changeAddress(address:Address):void // return값이 없어서 void
+}
+const Store:React.FC<OwnProps> = ({info, changeAddress}) => {
+```
+
+### extends
+- 타입 선언한 거 가져오기
+```js
+interface OwnProps extends Menu {
+    showBestMenuName(name:string):string    // Menu에 지정 안된 타입 추가도 가능
+}
+```
+- Omit : 타입에서 뭔가를 빼고 가져오기 
+```js
+// Omit : 이거 빼주세용
+export type AddressWithoutZip = Omit<Address, 'zipCode'>
+
+// 함수에서 바로 쓰기도 가능
+interface OwnProps extends Omit<Menu, 'price'> {}
+```
+- Pick : 타입에서 특정 값만 가져오기
+```js
+export type RestaurantOnlyCategory = Pick<Restaurant, 'category'>
+```
+
 ### 함수
 ```typescript
 function addNumber (a:number, b:number):number{ // number, number 받고, number return함
@@ -55,6 +84,7 @@ function addNumber (a:number, b:number):number{ // number, number 받고, number
 import type {Restaurant} from './model/restaurant'; // import type으로 type 가져오기
 const [myRestaurant, setMyRestaurant] = useState<Restaurant>(data)
 ```
+
 ## 실행
 ### tsconfig.json
 ```json
@@ -71,6 +101,7 @@ const [myRestaurant, setMyRestaurant] = useState<Restaurant>(data)
 
 }
 ```
+
 ### 빌드
 - Mac : VSCode에서 ```cmd + shift + B``` 후 tsconfig.json 선택하면 빌드됨
 - Window : VSCode에서 하면 안됨!
