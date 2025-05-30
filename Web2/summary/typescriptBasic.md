@@ -72,6 +72,18 @@ interface OwnProps extends Omit<Menu, 'price'> {}
 export type RestaurantOnlyCategory = Pick<Restaurant, 'category'>
 ```
 
+### API call 타입 만들기
+```js
+export type ApiResponse<T> = {
+    data:T[],       // data가 api 호출에 따라 타입이 달라지니까
+    totlaPage:number,
+    page:number
+}
+
+export type RestaurantResponse = ApiResponse<Restaurant>
+export type MenuResponse = ApiResponse<Menu>
+```
+
 ### 함수
 ```typescript
 function addNumber (a:number, b:number):number{ // number, number 받고, number return함
