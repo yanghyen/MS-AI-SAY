@@ -16,5 +16,10 @@ import currentLocationIcon from '../assets/current_location.png';
 ```
 
 ## 💡 회고 / 인사이트
+- 아니 작업 하나 끝날 때마다 커밋하기로 한 거 또 깜빡했다. 
+- App.tsx에 라우터 했던 거 router/index.ts으로 옮겨서 정리했다. 이게 유지보수가 편하다고 한다.
             
 ## 🍩내일 할 일
+- Road View Page 구현
+- Search Page 디자인
+- Detail Page 디자인
