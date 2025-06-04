@@ -2,9 +2,14 @@
 ## ✅TO-DO
 - ✅전체 플로우 손 그림 디자인(User Page 안 함)
 - ✅Main Page 디자인
+- ✅전체 페이지 라우팅
+    - Detail Page는 제외
 - Road View Page 구현
     - 외않되
 - Search Page 디자인
+- 메인화면에서 Bottom Panel에 어떤 정보 넣을지? 
+    - 메인화면에서 제외해도 ㄱㅊ을지도
+    - 인기 급상승 데이터를 여기에 넣어도 ㄱㅊ다
 
 ## 📌Today I Learned
 ### React + Vite 이미지 불러오기
@@ -22,4 +27,4 @@ import currentLocationIcon from '../assets/current_location.png';
 ## 🍩내일 할 일
 - Road View Page 구현
 - Search Page 디자인
-- Detail Page 디자인
+- Detail Page 디자인 && 라우팅
