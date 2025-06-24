@@ -77,6 +77,22 @@
     빠잉
     ```
 
+- stringifier(문자열화 메서드)
+    - p는 문자열이 아니라 객체라서 이 메서드 없이 출력하면 메모리 정보가 출력됨
+    - __str__을 생성하면 pritn(객체)할 때 사람이 보기 편하게 출력해줌
+    ```py
+    class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __str__(self):
+        return f"{self.name} ({self.age}세)"
+
+    p = Person("혜인", 28)
+    print(p)  # 출력: 혜인 (28세)
+    ```
+
 ### static member variable
 - 메모리의 static 영역에 만들어짐
 - 메모리 절약 효과
