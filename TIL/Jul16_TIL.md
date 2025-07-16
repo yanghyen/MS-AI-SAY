@@ -22,7 +22,11 @@
 ## 🍩내일 할 일
 ### Remoria
 - image prompt 수정
-    - role extractor agent
+    - role extract
+    - scene split
+    - scene prompt
+    - 전체 등장인물 이미지 테스트
+    - 장면 이미지 테스트
 - BE 코드 훑기
     - 카카오 소셜 로그인
     - 가이드 프로필 등록
